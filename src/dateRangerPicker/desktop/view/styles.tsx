@@ -9,7 +9,7 @@ export const DesktopViewRoot = styled('div', {
   overridesResolver: (_, styles) => styles.root,
 })`
   display: flex;
-  flexdirection: row;
+  flex-direction: row;
 `;
 
 export const DesktopViewContainer = styled('div', {
@@ -34,6 +34,6 @@ export const DesktopViewArrowSwitcher = styled(PickersArrowSwitcher, {
 const DAY_RANGE_SIZE = 40;
 const weeksContainerHeight = (DAY_RANGE_SIZE + DAY_MARGIN * 2) * 6;
 export const DateRangePickerViewDesktopCalendar = styled(DayPicker<Dayjs>)`
-  minwidth: 312px;
-  minheight: ${weeksContainerHeight};
+  min-width: 312px;
+  min-height: ${weeksContainerHeight};
 `;
