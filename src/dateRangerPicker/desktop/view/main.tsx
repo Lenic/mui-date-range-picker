@@ -62,7 +62,7 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           onFocusedDayChange={doNothing}
           onSelectedDaysChange={handleSelectedDayChange}
           currentMonth={leftMonth}
-          renderDay={(day) => <span>{day.daysInMonth()}</span>}
+          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.daysInMonth()}</span>}
         />
       </Container>
       <Container>
@@ -77,6 +77,22 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
         >
           {months[1]}
         </Switcher>
+        <Calendar
+          minDate={minDate}
+          maxDate={maxDate}
+          disablePast={true}
+          focusedDay={null}
+          slideDirection="left"
+          reduceAnimations={false}
+          isMonthSwitchingAnimating
+          onMonthSwitchingAnimationEnd={() => {}}
+          disableFuture={true}
+          selectedDays={selectedDays}
+          onFocusedDayChange={doNothing}
+          onSelectedDaysChange={handleSelectedDayChange}
+          currentMonth={leftMonth}
+          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.daysInMonth()}</span>}
+        />
       </Container>
     </Wrapper>
   );
