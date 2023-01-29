@@ -11,8 +11,8 @@ import { useUtils } from '@mui/x-date-pickers/internals';
 import { useLeftMonth, useSelectedDays } from '../context';
 // import { DateRangePickerDay } from '../days';
 
-import { DateRangePickerViewDesktopCalendar } from './styles';
-import { DesktopViewArrowSwitcher, DesktopViewContainer, DesktopViewRoot } from './styles';
+import { Calendar } from './styles';
+import { Switcher, Container, Wrapper } from './styles';
 
 const doNothing = () => {};
 const minDate = dayjs(new Date(2000, 1, 1));
@@ -35,9 +35,9 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
   const handleSelectedDayChange: DayPickerProps<Dayjs>['onSelectedDaysChange'] = useCallback(() => {}, []);
 
   return (
-    <DesktopViewRoot>
-      <DesktopViewContainer>
-        <DesktopViewArrowSwitcher
+    <Wrapper>
+      <Container>
+        <Switcher
           onLeftClick={handleSelectPreviousMonth}
           onRightClick={handleSelectNextMonth}
           isRightHidden
@@ -47,8 +47,8 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           rightArrowButtonText={'后一个月'}
         >
           {months[0]}
-        </DesktopViewArrowSwitcher>
-        <DateRangePickerViewDesktopCalendar
+        </Switcher>
+        <Calendar
           minDate={minDate}
           maxDate={maxDate}
           disablePast={true}
@@ -64,9 +64,9 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           currentMonth={leftMonth}
           renderDay={(day) => <span>{day.daysInMonth()}</span>}
         />
-      </DesktopViewContainer>
-      <DesktopViewContainer>
-        <DesktopViewArrowSwitcher
+      </Container>
+      <Container>
+        <Switcher
           onLeftClick={handleSelectPreviousMonth}
           onRightClick={handleSelectNextMonth}
           isLeftHidden
@@ -76,8 +76,8 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           rightArrowButtonText={'后一个月'}
         >
           {months[1]}
-        </DesktopViewArrowSwitcher>
-      </DesktopViewContainer>
-    </DesktopViewRoot>
+        </Switcher>
+      </Container>
+    </Wrapper>
   );
 };

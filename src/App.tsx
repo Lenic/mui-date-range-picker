@@ -9,6 +9,7 @@ import type { Dayjs } from 'dayjs';
 import type { DateRange } from './dateRangerPicker/DateRangePicker';
 
 import { Mine } from './mine';
+import { DateRangePicker as DPicker } from './dateRangerPicker';
 import { DateRangePicker } from './dateRangerPicker/DateRangePicker';
 
 const DateRangePickerContainer = styled('div', {
@@ -23,6 +24,7 @@ function App() {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div>abc</div>
       <Mine />
+      <DPicker />
       <DateRangePickerContainer>
         <DateRangePicker
           value={value}

@@ -3,8 +3,8 @@ import type { Dayjs } from 'dayjs';
 import { styled } from '@mui/material/styles';
 import { DAY_MARGIN, DayPicker, PickersArrowSwitcher } from '@mui/x-date-pickers/internals';
 
-export const DesktopViewRoot = styled('div', {
-  name: 'DesktopViewRoot',
+export const Wrapper = styled('div', {
+  name: 'Wrapper',
   slot: 'Root',
   overridesResolver: (_, styles) => styles.root,
 })`
@@ -12,8 +12,8 @@ export const DesktopViewRoot = styled('div', {
   flex-direction: row;
 `;
 
-export const DesktopViewContainer = styled('div', {
-  name: 'DesktopViewContainer',
+export const Container = styled('div', {
+  name: 'Container',
   slot: 'Container',
   overridesResolver: (_, styles) => styles.container,
 })(({ theme }) => ({
@@ -22,9 +22,7 @@ export const DesktopViewContainer = styled('div', {
   },
 }));
 
-export const DesktopViewArrowSwitcher = styled(PickersArrowSwitcher, {
-  name: 'DesktopViewArrowSwitcher',
-})`
+export const Switcher = styled(PickersArrowSwitcher, { name: 'Switcher' })`
   padding: 16px 16px 8px 16px;
   display: flex;
   align-items: center;
@@ -33,7 +31,7 @@ export const DesktopViewArrowSwitcher = styled(PickersArrowSwitcher, {
 
 const DAY_RANGE_SIZE = 40;
 const weeksContainerHeight = (DAY_RANGE_SIZE + DAY_MARGIN * 2) * 6;
-export const DateRangePickerViewDesktopCalendar = styled(DayPicker<Dayjs>)`
+export const Calendar = styled(DayPicker<Dayjs>)`
   min-width: 312px;
   min-height: ${weeksContainerHeight};
 `;
