@@ -18,9 +18,9 @@ const doNothing = () => {};
 const minDate = dayjs(new Date(2000, 1, 1));
 const maxDate = dayjs(new Date(2099, 1, 1));
 
-export type TDesktopViewProps = {};
+export type TMonthViewProps = {};
 
-export const DesktopView: FC<TDesktopViewProps> = () => {
+export const MonthView: FC<TMonthViewProps> = () => {
   const { leftMonth, setLeftMonth } = useLeftMonth();
   const { selectedDays, setSelectedDays } = useSelectedDays();
   const handleSelectNextMonth = useCallback(() => setLeftMonth((cur) => cur.add(1, 'month')), [setLeftMonth]);
