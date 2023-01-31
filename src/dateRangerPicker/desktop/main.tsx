@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import type { TSelectedDays } from './context';
+import type { TRangeDays } from './context';
 
 import dayjs from 'dayjs';
 import { useState } from 'react';
@@ -10,7 +10,7 @@ import { LeftMonthProvider, SelectedDaysProvider } from './context';
 
 export const DateRangePicker: FC = () => {
   const [leftMonth, setLeftMonth] = useState(() => dayjs());
-  const [selectedDays, setSelectedDays] = useState(() => [null, null] as TSelectedDays);
+  const [selectedDays, setSelectedDays] = useState(() => [null, null] as TRangeDays);
 
   return (
     <LeftMonthProvider value={leftMonth} setValue={setLeftMonth}>

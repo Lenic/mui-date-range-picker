@@ -62,7 +62,7 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           onFocusedDayChange={doNothing}
           onSelectedDaysChange={handleSelectedDayChange}
           currentMonth={leftMonth}
-          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.daysInMonth()}</span>}
+          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.date()}</span>}
         />
       </Container>
       <Container>
@@ -91,7 +91,7 @@ export const DesktopView: FC<TDesktopViewProps> = () => {
           onFocusedDayChange={doNothing}
           onSelectedDaysChange={handleSelectedDayChange}
           currentMonth={leftMonth}
-          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.daysInMonth()}</span>}
+          renderDay={(day, _, DayProps) => <span key={DayProps.key}>{day.date()}</span>}
         />
       </Container>
     </Wrapper>
