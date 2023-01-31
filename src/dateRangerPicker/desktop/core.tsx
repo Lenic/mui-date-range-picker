@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { MonthView } from './month';
 import { LeftMonthProvider, SelectedDaysProvider } from './context';
 
-export const DateRangePicker: FC = () => {
+export const DateRangePickerPanel: FC = () => {
   const [leftMonth, setLeftMonth] = useState(() => dayjs());
   const [selectedDays, setSelectedDays] = useState(() => [null, null] as TRangeDays);
 

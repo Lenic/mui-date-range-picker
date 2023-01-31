@@ -9,7 +9,7 @@ import type { Dayjs } from 'dayjs';
 import type { DateRange } from './original/DateRangePicker';
 
 import { Mine } from './mine';
-import { DateRangePicker as DPicker } from './dateRangerPicker';
+import { DateRangePickerPanel as DPicker } from './dateRangerPicker';
 import { DateRangePicker } from './original/DateRangePicker';
 
 const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer' })`
