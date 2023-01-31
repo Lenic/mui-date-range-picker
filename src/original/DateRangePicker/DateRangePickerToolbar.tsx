@@ -10,11 +10,8 @@ import {
   BaseToolbarProps,
   useLocaleText,
 } from '@mui/x-date-pickers/internals';
-import { DateRange, CurrentlySelectingRangeEndProps } from '../internal/models';
-import {
-  DateRangePickerToolbarClasses,
-  getDateRangePickerToolbarUtilityClass,
-} from './dateRangePickerToolbarClasses';
+import { DateRange, CurrentlySelectingRangeEndProps } from '../../dateRangerPicker/internal/models';
+import { DateRangePickerToolbarClasses, getDateRangePickerToolbarUtilityClass } from './dateRangePickerToolbarClasses';
 
 const useUtilityClasses = (ownerState: DateRangePickerToolbarProps<any>) => {
   const { classes } = ownerState;
@@ -30,11 +27,7 @@ export interface DateRangePickerToolbarProps<TDate>
   extends CurrentlySelectingRangeEndProps,
     Pick<
       BaseToolbarProps<TDate, DateRange<TDate>>,
-      | 'isMobileKeyboardViewOpen'
-      | 'toggleMobileKeyboardView'
-      | 'toolbarTitle'
-      | 'toolbarFormat'
-      | 'parsedValue'
+      'isMobileKeyboardViewOpen' | 'toggleMobileKeyboardView' | 'toolbarTitle' | 'toolbarFormat' | 'parsedValue'
     > {
   startText: React.ReactNode;
   endText: React.ReactNode;
@@ -65,9 +58,10 @@ const DateRangePickerToolbarContainer = styled('div', {
 /**
  * @ignore - internal component.
  */
-export const DateRangePickerToolbar = React.forwardRef(function DateRangePickerToolbar<
-  TDate extends unknown,
->(inProps: DateRangePickerToolbarProps<TDate>, ref: React.Ref<HTMLDivElement>) {
+export const DateRangePickerToolbar = React.forwardRef(function DateRangePickerToolbar<TDate extends unknown>(
+  inProps: DateRangePickerToolbarProps<TDate>,
+  ref: React.Ref<HTMLDivElement>
+) {
   const utils = useUtils<TDate>();
   const props = useThemeProps({ props: inProps, name: 'MuiDateRangePickerToolbar' });
 
@@ -86,13 +80,9 @@ export const DateRangePickerToolbar = React.forwardRef(function DateRangePickerT
   const localeText = useLocaleText();
   const toolbarTitle = toolbarTitleProp ?? localeText.dateRangePickerDefaultToolbarTitle;
 
-  const startDateValue = start
-    ? utils.formatByString(start, toolbarFormat || utils.formats.shortDate)
-    : startText;
+  const startDateValue = start ? utils.formatByString(start, toolbarFormat || utils.formats.shortDate) : startText;
 
-  const endDateValue = end
-    ? utils.formatByString(end, toolbarFormat || utils.formats.shortDate)
-    : endText;
+  const endDateValue = end ? utils.formatByString(end, toolbarFormat || utils.formats.shortDate) : endText;
 
   const ownerState = props;
   const classes = useUtilityClasses(ownerState);

@@ -11,7 +11,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';
-import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
+import { useDateRangeValidation } from '../../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
 import {
   BaseDateRangePickerProps,
   useDateRangePickerDefaultizedProps,

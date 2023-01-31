@@ -11,12 +11,9 @@ import {
   useMaskedInput,
   onSpaceOrEnter,
 } from '@mui/x-date-pickers/internals';
-import { CurrentlySelectingRangeEndProps, DateRange } from '../internal/models/dateRange';
-import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
-import {
-  DateRangePickerInputClasses,
-  getDateRangePickerInputUtilityClass,
-} from './dateRangePickerInputClasses';
+import { CurrentlySelectingRangeEndProps, DateRange } from '../../dateRangerPicker/internal/models/dateRange';
+import { DateRangeValidationError } from '../../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
+import { DateRangePickerInputClasses, getDateRangePickerInputUtilityClass } from './dateRangePickerInputClasses';
 
 const useUtilityClasses = (ownerState: DateRangePickerInputProps<any, any>) => {
   const { classes } = ownerState;
@@ -83,18 +80,15 @@ export interface DateRangePickerInputProps<TInputDate, TDate>
 }
 
 type DatePickerInputComponent = <TInputDate, TDate>(
-  props: DateRangePickerInputProps<TInputDate, TDate> & React.RefAttributes<HTMLDivElement>,
+  props: DateRangePickerInputProps<TInputDate, TDate> & React.RefAttributes<HTMLDivElement>
 ) => JSX.Element;
 
 /**
  * @ignore - internal component.
  */
-export const DateRangePickerInput = React.forwardRef(function DateRangePickerInput<
-  TInputDate,
-  TDate,
->(
+export const DateRangePickerInput = React.forwardRef(function DateRangePickerInput<TInputDate, TDate>(
   inProps: DateRangePickerInputProps<TInputDate, TDate>,
-  ref: React.Ref<HTMLDivElement>,
+  ref: React.Ref<HTMLDivElement>
 ): JSX.Element {
   const props = useThemeProps({ props: inProps, name: 'MuiDateRangePickerInput' });
   const {
@@ -138,9 +132,8 @@ export const DateRangePickerInput = React.forwardRef(function DateRangePickerInp
   // TODO: rethink this approach. We do not need to wait for calendar to be updated to rerender input (looks like freezing)
   // TODO: so simply break 1 react's commit phase in 2 (first for input and second for calendars) by executing onChange in the next tick
   const lazyHandleChangeCallback = React.useCallback(
-    (...args: Parameters<typeof onChange>) =>
-      executeInTheNextEventLoopTick(() => onChange(...args)),
-    [onChange],
+    (...args: Parameters<typeof onChange>) => executeInTheNextEventLoopTick(() => onChange(...args)),
+    [onChange]
   );
 
   const handleStartChange = (date: TDate | null, inputString?: string) => {
@@ -151,9 +144,7 @@ export const DateRangePickerInput = React.forwardRef(function DateRangePickerInp
     lazyHandleChangeCallback([utils.date(start), date], inputString);
   };
 
-  const openRangeStartSelection = (
-    event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-  ) => {
+  const openRangeStartSelection = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
     event.stopPropagation();
     if (setCurrentlySelectingRangeEnd) {
       setCurrentlySelectingRangeEnd('start');
@@ -163,9 +154,7 @@ export const DateRangePickerInput = React.forwardRef(function DateRangePickerInp
     }
   };
 
-  const openRangeEndSelection = (
-    event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-  ) => {
+  const openRangeEndSelection = (event: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>) => {
     event.stopPropagation();
     if (setCurrentlySelectingRangeEnd) {
       setCurrentlySelectingRangeEnd('end');

@@ -17,10 +17,10 @@ import {
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { calculateRangePreview } from './date-range-manager';
-import { DateRange } from '../internal/models';
+import { DateRange } from '../../dateRangerPicker/internal/models';
 import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
-import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
-import { doNothing } from '../internal/utils/utils';
+import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
+import { doNothing } from '../../dateRangerPicker/internal/utils/utils';
 import {
   DateRangePickerViewDesktopClasses,
   getDateRangePickerViewDesktopUtilityClass,

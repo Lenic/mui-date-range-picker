@@ -11,8 +11,12 @@ import {
   BaseDateValidationProps,
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { DateRange, CurrentlySelectingRangeEndProps, DayRangeValidationProps } from '../internal/models/dateRange';
-import { isRangeValid } from '../internal/utils/date-utils';
+import {
+  DateRange,
+  CurrentlySelectingRangeEndProps,
+  DayRangeValidationProps,
+} from '../../dateRangerPicker/internal/models/dateRange';
+import { isRangeValid } from '../../dateRangerPicker/internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import { DateRangePickerToolbar } from './DateRangePickerToolbar';
 import { DateRangePickerInput, DateRangePickerInputProps } from './DateRangePickerInput';
