@@ -2,7 +2,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {
   useUtils,
-  WrapperVariantContext,
   MobileKeyboardInputView,
   defaultReduceAnimations,
   ExportedCalendarPickerProps,
@@ -16,17 +15,8 @@ import { DateRange, CurrentlySelectingRangeEndProps, DayRangeValidationProps } f
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import { DateRangePickerToolbar } from './DateRangePickerToolbar';
-import {
-  DateRangePickerViewMobile,
-  DateRangePickerViewMobileSlotsComponent,
-  DateRangePickerViewMobileSlotsComponentsProps,
-} from './DateRangePickerViewMobile';
 import { DateRangePickerInput, DateRangePickerInputProps } from './DateRangePickerInput';
 import { DateRangePickerViewDesktop, ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
-
-export interface DateRangePickerViewSlotsComponent extends DateRangePickerViewMobileSlotsComponent {}
-
-export interface DateRangePickerViewSlotsComponentsProps extends DateRangePickerViewMobileSlotsComponentsProps {}
 
 export interface ExportedDateRangePickerViewProps<TDate>
   extends ExportedDesktopDateRangeCalendarProps<TDate>,
@@ -35,16 +25,6 @@ export interface ExportedDateRangePickerViewProps<TDate>
       ExportedCalendarPickerProps<TDate>,
       'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
     > {
-  /**
-   * Overrideable components.
-   * @default {}
-   */
-  components?: Partial<DateRangePickerViewSlotsComponent>;
-  /**
-   * The props used for each component slot.
-   * @default {}
-   */
-  componentsProps?: Partial<DateRangePickerViewSlotsComponentsProps>;
   /**
    * If `true`, after selecting `start` date calendar will not automatically switch to the month of `end` date.
    * @default false
@@ -119,7 +99,6 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
   } = props;
 
   const utils = useUtils<TDate>();
-  const wrapperVariant = React.useContext(WrapperVariantContext);
 
   const wrappedShouldDisableDate =
     shouldDisableDate && ((dayToTest: TDate) => shouldDisableDate?.(dayToTest, currentlySelectingRangeEnd));
@@ -139,7 +118,7 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       shouldDisableDate: wrappedShouldDisableDate,
     });
 
-  const toShowToolbar = showToolbar ?? wrapperVariant !== 'desktop';
+  const toShowToolbar = showToolbar ?? false;
 
   const scrollToDayIfNeeded = (day: TDate | null) => {
     if (!day || !utils.isValid(day) || isDateDisabled(day)) {
@@ -152,7 +131,7 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       return;
     }
 
-    const displayingMonthRange = wrapperVariant === 'mobile' ? 0 : calendars - 1;
+    const displayingMonthRange = calendars - 1;
     const currentMonthNumber = utils.getMonth(calendarState.currentMonth);
     const requestedMonthNumber = utils.getMonth(day);
 
@@ -192,9 +171,9 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
 
       const isFullRangeSelected = currentlySelectingRangeEnd === 'end' && isRangeValid(utils, newRange);
 
-      onDateChange(newRange as DateRange<TDate>, wrapperVariant, isFullRangeSelected ? 'finish' : 'partial');
+      onDateChange(newRange as DateRange<TDate>, 'desktop', isFullRangeSelected ? 'finish' : 'partial');
     },
-    [currentlySelectingRangeEnd, parsedValue, onDateChange, setCurrentlySelectingRangeEnd, utils, wrapperVariant]
+    [currentlySelectingRangeEnd, parsedValue, onDateChange, setCurrentlySelectingRangeEnd, utils]
   );
 
   const renderView = () => {
@@ -216,15 +195,7 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       ...other,
     };
 
-    switch (wrapperVariant) {
-      case 'desktop': {
-        return <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />;
-      }
-
-      default: {
-        return <DateRangePickerViewMobile {...sharedCalendarProps} />;
-      }
-    }
+    return <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />;
   };
 
   return (

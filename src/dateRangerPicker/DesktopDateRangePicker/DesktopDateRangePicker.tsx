@@ -9,11 +9,7 @@ import {
   DesktopWrapperSlotsComponentsProps,
   DateInputSlotsComponent,
 } from '@mui/x-date-pickers/internals';
-import {
-  DateRangePickerView,
-  DateRangePickerViewSlotsComponent,
-  DateRangePickerViewSlotsComponentsProps,
-} from '../DateRangePicker/DateRangePickerView';
+import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';
 import { useDateRangeValidation } from '../internal/hooks/validation/useDateRangeValidation';
 import {
@@ -24,14 +20,9 @@ import {
 
 const KeyboardDateInputComponent = DateRangePickerInput as unknown as React.FC<DateInputPropsLike>;
 
-export interface DesktopDateRangePickerSlotsComponent
-  extends DesktopWrapperSlotsComponent,
-    DateRangePickerViewSlotsComponent,
-    DateInputSlotsComponent {}
+export interface DesktopDateRangePickerSlotsComponent extends DesktopWrapperSlotsComponent, DateInputSlotsComponent {}
 
-export interface DesktopDateRangePickerSlotsComponentsProps
-  extends DesktopWrapperSlotsComponentsProps,
-    DateRangePickerViewSlotsComponentsProps {}
+export interface DesktopDateRangePickerSlotsComponentsProps extends DesktopWrapperSlotsComponentsProps {}
 
 export interface DesktopDateRangePickerProps<TInputDate, TDate>
   extends BaseDateRangePickerProps<TInputDate, TDate>,
@@ -107,8 +98,6 @@ export const DesktopDateRangePicker = React.forwardRef(function DesktopDateRange
         currentlySelectingRangeEnd={currentlySelectingRangeEnd}
         setCurrentlySelectingRangeEnd={setCurrentlySelectingRangeEnd}
         {...pickerProps}
-        components={components}
-        componentsProps={componentsProps}
         {...other}
       />
     </DesktopTooltipWrapper>
