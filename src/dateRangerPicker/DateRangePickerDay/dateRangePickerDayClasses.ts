@@ -33,20 +33,17 @@ export function getDateRangePickerDayUtilityClass(slot: string) {
   return generateUtilityClass('MuiDateRangePickerDay', slot);
 }
 
-export const dateRangePickerDayClasses: DateRangePickerDayClasses = generateUtilityClasses(
-  'MuiDateRangePickerDay',
-  [
-    'root',
-    'rangeIntervalDayHighlight',
-    'rangeIntervalDayHighlightStart',
-    'rangeIntervalDayHighlightEnd',
-    'rangeIntervalPreview',
-    'rangeIntervalDayPreview',
-    'rangeIntervalDayPreviewStart',
-    'rangeIntervalDayPreviewEnd',
-    'day',
-    'dayOutsideRangeInterval',
-    'dayInsideRangeInterval',
-    'notSelectedDate',
-  ],
-);
+export const dateRangePickerDayClasses: DateRangePickerDayClasses = generateUtilityClasses('MuiDateRangePickerDay', [
+  'root',
+  'rangeIntervalDayHighlight',
+  'rangeIntervalDayHighlightStart',
+  'rangeIntervalDayHighlightEnd',
+  'rangeIntervalPreview',
+  'rangeIntervalDayPreview',
+  'rangeIntervalDayPreviewStart',
+  'rangeIntervalDayPreviewEnd',
+  'day',
+  'dayOutsideRangeInterval',
+  'dayInsideRangeInterval',
+  'notSelectedDate',
+]);
