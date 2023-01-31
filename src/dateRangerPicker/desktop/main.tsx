@@ -5,7 +5,7 @@ import type { TRangeDays } from './context';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { DesktopView } from './view';
+import { DesktopView } from './month';
 import { LeftMonthProvider, SelectedDaysProvider } from './context';
 
 export const DateRangePicker: FC = () => {
