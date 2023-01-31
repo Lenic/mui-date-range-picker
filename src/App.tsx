@@ -12,9 +12,7 @@ import { Mine } from './mine';
 import { DateRangePicker as DPicker } from './dateRangerPicker';
 import { DateRangePicker } from './dateRangerPicker/DateRangePicker';
 
-const DateRangePickerContainer = styled('div', {
-  name: 'DateRangePickerContainer',
-})`
+const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer' })`
   display: flex;
 `;
 

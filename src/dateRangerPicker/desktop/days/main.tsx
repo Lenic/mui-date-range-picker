@@ -1,4 +1,7 @@
-import * as React from 'react';
+import type { Dayjs } from 'dayjs';
+import type { RefAttributes, Ref, PropsWithChildren } from 'react';
+
+import { forwardRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { SxProps } from '@mui/system';
@@ -6,14 +9,10 @@ import { alpha, styled, Theme, useThemeProps } from '@mui/material/styles';
 import { unstable_composeClasses as composeClasses } from '@mui/material';
 import { DAY_MARGIN, useUtils, areDayPropsEqual } from '@mui/x-date-pickers/internals';
 import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
-import {
-  DateRangePickerDayClasses,
-  getDateRangePickerDayUtilityClass,
-  dateRangePickerDayClasses,
-} from './dateRangePickerDayClasses';
+import { DateRangePickerDayClasses, getDateRangePickerDayUtilityClass, dateRangePickerDayClasses } from './utils';
 
-export interface DateRangePickerDayProps<TDate>
-  extends Omit<PickersDayProps<TDate>, 'classes' | 'onBlur' | 'onFocus' | 'onKeyDown'> {
+export interface DateRangePickerDayProps
+  extends Omit<PickersDayProps<Dayjs>, 'classes' | 'onBlur' | 'onFocus' | 'onKeyDown'> {
   /**
    * Set to `true` if the `day` is in a highlighted date range.
    */
@@ -48,7 +47,7 @@ export interface DateRangePickerDayProps<TDate>
   sx?: SxProps<Theme>;
 }
 
-type OwnerState = DateRangePickerDayProps<any> & { isEndOfMonth: boolean; isStartOfMonth: boolean };
+type OwnerState = DateRangePickerDayProps & { isEndOfMonth: boolean; isStartOfMonth: boolean };
 
 const useUtilityClasses = (ownerState: OwnerState) => {
   const {
@@ -221,15 +220,13 @@ const DateRangePickerDayDay = styled(PickersDay, {
     ownerState.isHighlighting && {
       color: theme.palette.getContrastText(alpha(theme.palette.primary.light, 0.6)),
     }),
-})) as unknown as <TDate>(props: PickersDayProps<TDate> & { ownerState: OwnerState }) => JSX.Element;
+})) as unknown as (props: PickersDayProps<Dayjs> & { ownerState: OwnerState }) => JSX.Element;
 
-type DateRangePickerDayComponent = <TDate>(
-  props: DateRangePickerDayProps<TDate> & React.RefAttributes<HTMLButtonElement>
-) => JSX.Element;
+type DateRangePickerDayComponent = (props: DateRangePickerDayProps & RefAttributes<HTMLButtonElement>) => JSX.Element;
 
-const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate>(
-  inProps: DateRangePickerDayProps<TDate>,
-  ref: React.Ref<HTMLButtonElement>
+const DateRangePickerDayRaw = forwardRef(function DateRangePickerDay(
+  inProps: DateRangePickerDayProps,
+  ref: Ref<HTMLButtonElement>
 ) {
   const props = useThemeProps({ props: inProps, name: 'MuiDateRangePickerDay' });
   const {
@@ -246,7 +243,7 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate
     ...other
   } = props;
 
-  const utils = useUtils<TDate>();
+  const utils = useUtils<Dayjs>();
 
   const isEndOfMonth = utils.isSameDay(day, utils.endOfMonth(day));
   const isStartOfMonth = utils.isSameDay(day, utils.startOfMonth(day));
@@ -274,7 +271,7 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate
         className={classes.rangeIntervalPreview}
         ownerState={ownerState}
       >
-        <DateRangePickerDayDay<TDate>
+        <DateRangePickerDayDay
           {...other}
           ref={ref}
           disableMargin
@@ -374,8 +371,8 @@ DateRangePickerDayRaw.propTypes = {
 } as any;
 
 const propsAreEqual = (
-  prevProps: Readonly<React.PropsWithChildren<DateRangePickerDayProps<any>>>,
-  nextProps: Readonly<React.PropsWithChildren<DateRangePickerDayProps<any>>>
+  prevProps: Readonly<PropsWithChildren<DateRangePickerDayProps>>,
+  nextProps: Readonly<PropsWithChildren<DateRangePickerDayProps>>
 ) => {
   return (
     prevProps.isHighlighting === nextProps.isHighlighting &&
@@ -398,4 +395,4 @@ const propsAreEqual = (
  *
  * - [DateRangePickerDay API](https://mui.com/x/api/date-pickers/date-range-picker-day/)
  */
-export const DateRangePickerDay = React.memo(DateRangePickerDayRaw, propsAreEqual) as DateRangePickerDayComponent;
+export const DateRangePickerDay = memo(DateRangePickerDayRaw, propsAreEqual) as DateRangePickerDayComponent;
