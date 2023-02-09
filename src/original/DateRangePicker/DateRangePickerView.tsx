@@ -1,8 +1,6 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import {
   useUtils,
-  MobileKeyboardInputView,
   defaultReduceAnimations,
   ExportedCalendarPickerProps,
   useCalendarState,
@@ -19,7 +17,7 @@ import {
 import { isRangeValid } from '../../dateRangerPicker/internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import { DateRangePickerToolbar } from './DateRangePickerToolbar';
-import { DateRangePickerInput, DateRangePickerInputProps } from './DateRangePickerInput';
+import type { DateRangePickerInputProps } from './DateRangePickerInput';
 import { DateRangePickerViewDesktop, ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
 
 export interface ExportedDateRangePickerViewProps<TDate>
@@ -65,9 +63,9 @@ interface DateRangePickerViewProps<TInputDate, TDate>
   DateInputProps: DateRangePickerInputProps<TInputDate, TDate>;
 }
 
-type DateRangePickerViewComponent = (<TInputDate, TDate = TInputDate>(
+type DateRangePickerViewComponent = <TInputDate, TDate = TInputDate>(
   props: DateRangePickerViewProps<TInputDate, TDate>
-) => JSX.Element) & { propTypes?: any };
+) => JSX.Element;
 
 /**
  * @ignore - internal component.
@@ -180,26 +178,22 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     [currentlySelectingRangeEnd, parsedValue, onDateChange, setCurrentlySelectingRangeEnd, utils]
   );
 
-  const renderView = () => {
-    const sharedCalendarProps = {
-      parsedValue,
-      changeFocusedDay,
-      onSelectedDaysChange: handleSelectedDayChange,
-      reduceAnimations,
-      disableHighlightToday,
-      onMonthSwitchingAnimationEnd,
-      changeMonth,
-      currentlySelectingRangeEnd,
-      disableFuture,
-      disablePast,
-      minDate,
-      maxDate,
-      shouldDisableDate: wrappedShouldDisableDate,
-      ...calendarState,
-      ...other,
-    };
-
-    return <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />;
+  const sharedCalendarProps = {
+    parsedValue,
+    changeFocusedDay,
+    onSelectedDaysChange: handleSelectedDayChange,
+    reduceAnimations,
+    disableHighlightToday,
+    onMonthSwitchingAnimationEnd,
+    changeMonth,
+    currentlySelectingRangeEnd,
+    disableFuture,
+    disablePast,
+    minDate,
+    maxDate,
+    shouldDisableDate: wrappedShouldDisableDate,
+    ...calendarState,
+    ...other,
   };
 
   return (
@@ -207,7 +201,7 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       {toShowToolbar && (
         <DateRangePickerToolbar
           parsedValue={parsedValue}
-          isMobileKeyboardViewOpen={isMobileKeyboardViewOpen}
+          isMobileKeyboardViewOpen={false}
           toggleMobileKeyboardView={toggleMobileKeyboardView}
           currentlySelectingRangeEnd={currentlySelectingRangeEnd}
           setCurrentlySelectingRangeEnd={setCurrentlySelectingRangeEnd}
@@ -217,21 +211,9 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
           toolbarFormat={toolbarFormat}
         />
       )}
-
-      {isMobileKeyboardViewOpen ? (
-        <MobileKeyboardInputView>
-          <DateRangePickerInput disableOpenPicker ignoreInvalidInputs {...DateInputProps} />
-        </MobileKeyboardInputView>
-      ) : (
-        renderView()
-      )}
+      <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />
     </div>
   );
 }
 
 export const DateRangePickerView = DateRangePickerViewRaw as DateRangePickerViewComponent;
-
-DateRangePickerViewRaw.propTypes = {
-  calendars: PropTypes.oneOf([1, 2, 3]),
-  disableAutoMonthSwitching: PropTypes.bool,
-};

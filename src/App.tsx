@@ -8,8 +8,6 @@ import { styled } from '@mui/material/styles';
 import type { Dayjs } from 'dayjs';
 import type { DateRange } from './original/DateRangePicker';
 
-import { Mine } from './mine';
-import { DateRangePickerPanel as DPicker } from './dateRangerPicker';
 import { DateRangePicker } from './original/DateRangePicker';
 
 const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer' })`
@@ -21,8 +19,6 @@ function App() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div>abc</div>
-      <Mine />
-      <DPicker />
       <DateRangePickerContainer>
         <DateRangePicker
           value={value}

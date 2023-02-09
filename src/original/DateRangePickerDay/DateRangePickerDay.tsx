@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { SxProps } from '@mui/system';
 import { alpha, styled, Theme, useThemeProps } from '@mui/material/styles';
@@ -143,14 +142,6 @@ const DateRangePickerDayRoot = styled('div', {
   }),
 }));
 
-DateRangePickerDayRoot.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
-  ownerState: PropTypes.object.isRequired,
-} as any;
-
 const DateRangePickerDayRangeIntervalPreview = styled('div', {
   name: 'MuiDateRangePickerDay',
   slot: 'RangeIntervalPreview',
@@ -183,14 +174,6 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
       }),
     }),
 }));
-
-DateRangePickerDayRangeIntervalPreview.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
-  ownerState: PropTypes.object.isRequired,
-} as any;
 
 const DateRangePickerDayDay = styled(PickersDay, {
   name: 'MuiDateRangePickerDay',
@@ -289,89 +272,6 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate
     </DateRangePickerDayRoot>
   );
 });
-
-DateRangePickerDayRaw.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // | To update them edit the TypeScript types and run "yarn proptypes"  |
-  // ----------------------------------------------------------------------
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: PropTypes.object,
-  /**
-   * The date to show.
-   */
-  day: PropTypes.any.isRequired,
-  /**
-   * If `true`, renders as disabled.
-   * @default false
-   */
-  disabled: PropTypes.bool,
-  /**
-   * If `true`, today's date is rendering without highlighting with circle.
-   * @default false
-   */
-  disableHighlightToday: PropTypes.bool,
-  /**
-   * If `true`, days are rendering without margin. Useful for displaying linked range of days.
-   * @default false
-   */
-  disableMargin: PropTypes.bool,
-  isAnimating: PropTypes.bool,
-  /**
-   * Set to `true` if the `day` is the end of a highlighted date range.
-   */
-  isEndOfHighlighting: PropTypes.bool.isRequired,
-  /**
-   * Set to `true` if the `day` is the start of a highlighted date range.
-   */
-  isEndOfPreviewing: PropTypes.bool.isRequired,
-  /**
-   * Set to `true` if the `day` is in a highlighted date range.
-   */
-  isHighlighting: PropTypes.bool.isRequired,
-  /**
-   * Set to `true` if the `day` is in a preview date range.
-   */
-  isPreviewing: PropTypes.bool.isRequired,
-  /**
-   * Set to `true` if the `day` is the start of a highlighted date range.
-   */
-  isStartOfHighlighting: PropTypes.bool.isRequired,
-  /**
-   * Set to `true` if the `day` is the end of a highlighted date range.
-   */
-  isStartOfPreviewing: PropTypes.bool.isRequired,
-  onDaySelect: PropTypes.func.isRequired,
-  /**
-   * If `true`, day is outside of month and will be hidden.
-   */
-  outsideCurrentMonth: PropTypes.bool.isRequired,
-  /**
-   * If `true`, renders as selected.
-   * @default false
-   */
-  selected: PropTypes.bool,
-  /**
-   * If `true`, days that have `outsideCurrentMonth={true}` are displayed.
-   * @default false
-   */
-  showDaysOutsideCurrentMonth: PropTypes.bool,
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool])),
-    PropTypes.func,
-    PropTypes.object,
-  ]),
-  /**
-   * If `true`, renders as today date.
-   * @default false
-   */
-  today: PropTypes.bool,
-} as any;
 
 const propsAreEqual = (
   prevProps: Readonly<React.PropsWithChildren<DateRangePickerDayProps<any>>>,

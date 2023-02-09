@@ -11,7 +11,6 @@ import {
   usePreviousMonthDisabled,
   useNextMonthDisabled,
   DayPicker,
-  buildDeprecatedPropsWarning,
   DayPickerProps,
   DAY_MARGIN,
   DayValidationProps,
@@ -57,7 +56,7 @@ export interface DesktopDateRangeCalendarProps<TDate>
   extends ExportedDesktopDateRangeCalendarProps<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate>,
-    ExportedArrowSwitcherProps {
+    Omit<ExportedArrowSwitcherProps, 'leftArrowButtonText' | 'rightArrowButtonText'> {
   calendars: 1 | 2 | 3;
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
@@ -114,10 +113,6 @@ function getCalendarsArray(calendars: ExportedDesktopDateRangeCalendarProps<unkn
   }
 }
 
-const deprecatedPropsWarning = buildDeprecatedPropsWarning(
-  'Props for translation are deprecated. See https://mui.com/x/react-date-pickers/localization for more information.'
-);
-
 /**
  * @ignore - internal component.
  */
@@ -133,27 +128,20 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     parsedValue,
     disableFuture,
     disablePast,
-    leftArrowButtonText: leftArrowButtonTextProp,
     maxDate: maxDateProp,
     minDate: minDateProp,
     onSelectedDaysChange,
     renderDay = (_, dateRangeProps) => <DateRangePickerDay {...dateRangeProps} />,
-    rightArrowButtonText: rightArrowButtonTextProp,
     className,
     // excluding classes from `other` to avoid passing them down to children
     classes: providedClasses,
     ...other
   } = props;
 
-  deprecatedPropsWarning({
-    leftArrowButtonText: leftArrowButtonTextProp,
-    rightArrowButtonText: rightArrowButtonTextProp,
-  });
-
   const localeText = useLocaleText();
 
-  const leftArrowButtonText = leftArrowButtonTextProp ?? localeText.previousMonth;
-  const rightArrowButtonText = rightArrowButtonTextProp ?? localeText.nextMonth;
+  const leftArrowButtonText = localeText.previousMonth;
+  const rightArrowButtonText = localeText.nextMonth;
 
   const utils = useUtils<TDate>();
   const classes = useUtilityClasses(props);
