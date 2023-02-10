@@ -3,8 +3,6 @@ export type { DateRangePickerProps } from './DateRangePicker';
 
 export { getDateRangePickerInputUtilityClass, dateRangePickerInputClasses } from './dateRangePickerInputClasses';
 export type { DateRangePickerInputClasses, DateRangePickerInputClassKey } from './dateRangePickerInputClasses';
-export { getDateRangePickerToolbarUtilityClass, dateRangePickerToolbarClasses } from './dateRangePickerToolbarClasses';
-export type { DateRangePickerToolbarClasses, DateRangePickerToolbarClassKey } from './dateRangePickerToolbarClasses';
 export {
   getDateRangePickerViewDesktopUtilityClass,
   dateRangePickerViewDesktopClasses,

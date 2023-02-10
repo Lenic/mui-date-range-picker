@@ -16,7 +16,6 @@ import {
 } from '../../dateRangerPicker/internal/models/dateRange';
 import { isRangeValid } from '../../dateRangerPicker/internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
-import { DateRangePickerToolbar } from './DateRangePickerToolbar';
 import type { DateRangePickerInputProps } from './DateRangePickerInput';
 import { DateRangePickerViewDesktop, ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
 
@@ -32,19 +31,6 @@ export interface ExportedDateRangePickerViewProps<TDate>
    * @default false
    */
   disableAutoMonthSwitching?: boolean;
-  /**
-   * Mobile picker title, displaying in the toolbar.
-   * @default 'Select date range'
-   */
-  toolbarTitle?: React.ReactNode;
-  /**
-   * Date format, that is displaying in toolbar.
-   */
-  toolbarFormat?: string;
-  /**
-   * If `true`, show the toolbar even in desktop mode.
-   */
-  showToolbar?: boolean;
   /**
    * className applied to the root component.
    */
@@ -92,11 +78,8 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     reduceAnimations = defaultReduceAnimations,
     setCurrentlySelectingRangeEnd,
     shouldDisableDate,
-    showToolbar,
     startText,
     toggleMobileKeyboardView,
-    toolbarFormat,
-    toolbarTitle,
     ...other
   } = props;
 
@@ -119,8 +102,6 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       reduceAnimations,
       shouldDisableDate: wrappedShouldDisableDate,
     });
-
-  const toShowToolbar = showToolbar ?? false;
 
   const scrollToDayIfNeeded = (day: TDate | null) => {
     if (!day || !utils.isValid(day) || isDateDisabled(day)) {
@@ -198,19 +179,6 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
 
   return (
     <div className={className}>
-      {toShowToolbar && (
-        <DateRangePickerToolbar
-          parsedValue={parsedValue}
-          isMobileKeyboardViewOpen={false}
-          toggleMobileKeyboardView={toggleMobileKeyboardView}
-          currentlySelectingRangeEnd={currentlySelectingRangeEnd}
-          setCurrentlySelectingRangeEnd={setCurrentlySelectingRangeEnd}
-          startText={startText}
-          endText={endText}
-          toolbarTitle={toolbarTitle}
-          toolbarFormat={toolbarFormat}
-        />
-      )}
       <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />
     </div>
   );
