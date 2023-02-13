@@ -4,46 +4,44 @@ export interface DateRangePickerDayClasses {
   /** Styles applied to the root element. */
   root: string;
   /** Styles applied to the root element if `isHighlighting=true` and `outsideCurrentMonth=false`. */
-  rangeIntervalDayHighlight: string;
+  highlight: string;
   /** Styles applied to the root element if `isStartOfHighlighting=true` or `day` is the start of the month. */
-  rangeIntervalDayHighlightStart: string;
+  'highlight-start': string;
   /** Styles applied to the root element if `isEndOfHighlighting=true` or `day` is the end of the month. */
-  rangeIntervalDayHighlightEnd: string;
+  'highlight-end': string;
   /** Styles applied to the preview element. */
-  rangeIntervalPreview: string;
+  'preselected-base': string;
   /** Styles applied to the root element if `isPreviewing=true` and `outsideCurrentMonth=false`. */
-  rangeIntervalDayPreview: string;
+  'preselected-state': string;
   /** Styles applied to the root element if `isStartOfPreviewing=true` or `day` is the start of the month. */
-  rangeIntervalDayPreviewStart: string;
+  'preselected-start': string;
   /** Styles applied to the root element if `isEndOfPreviewing=true` or `day` is the end of the month. */
-  rangeIntervalDayPreviewEnd: string;
+  'preselected-end': string;
   /** Styles applied to the day element. */
   day: string;
   /** Styles applied to the day element if `isHighlighting=false`. */
-  dayOutsideRangeInterval: string;
+  'day-outside': string;
   /** Styles applied to the day element if `selected=false` and `isHighlighting=true`. */
-  dayInsideRangeInterval: string;
+  'day-inside': string;
   /** Styles applied to the day element if `selected=false`. */
-  notSelectedDate: string;
+  'not-selected': string;
 }
 
 export type DateRangePickerDayClassKey = keyof DateRangePickerDayClasses;
 
-export function getDateRangePickerDayUtilityClass(slot: string) {
-  return generateUtilityClass('MuiDateRangePickerDay', slot);
-}
-
-export const dateRangePickerDayClasses: DateRangePickerDayClasses = generateUtilityClasses('MuiDateRangePickerDay', [
+const componentName = 'day-render';
+export const getDateRangePickerDayUtilityClass = generateUtilityClass.bind(null, componentName);
+export const dateRangePickerDayClasses: DateRangePickerDayClasses = generateUtilityClasses(componentName, [
   'root',
-  'rangeIntervalDayHighlight',
-  'rangeIntervalDayHighlightStart',
-  'rangeIntervalDayHighlightEnd',
-  'rangeIntervalPreview',
-  'rangeIntervalDayPreview',
-  'rangeIntervalDayPreviewStart',
-  'rangeIntervalDayPreviewEnd',
+  'highlight',
+  'highlight-start',
+  'highlight-end',
+  'preselected-base',
+  'preselected-state',
+  'preselected-start',
+  'preselected-end',
   'day',
-  'dayOutsideRangeInterval',
-  'dayInsideRangeInterval',
-  'notSelectedDate',
+  'day-outside',
+  'day-inside',
+  'not-selected',
 ]);

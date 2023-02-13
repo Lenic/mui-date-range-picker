@@ -67,21 +67,21 @@ const useUtilityClasses = (ownerState: OwnerState) => {
   const slots = {
     root: [
       'root',
-      isHighlighting && !outsideCurrentMonth && 'rangeIntervalDayHighlight',
-      (isStartOfHighlighting || isStartOfMonth) && 'rangeIntervalDayHighlightStart',
-      (isEndOfHighlighting || isEndOfMonth) && 'rangeIntervalDayHighlightEnd',
+      isHighlighting && !outsideCurrentMonth && 'highlight',
+      (isStartOfHighlighting || isStartOfMonth) && 'highlight-start',
+      (isEndOfHighlighting || isEndOfMonth) && 'highlight-end',
     ],
-    rangeIntervalPreview: [
-      'rangeIntervalPreview',
-      isPreviewing && !outsideCurrentMonth && 'rangeIntervalDayPreview',
-      (isStartOfPreviewing || isStartOfMonth) && 'rangeIntervalDayPreviewStart',
-      (isEndOfPreviewing || isEndOfMonth) && 'rangeIntervalDayPreviewEnd',
+    isPreselected: [
+      'preselected-base',
+      isPreviewing && !outsideCurrentMonth && 'preselected-state',
+      (isStartOfPreviewing || isStartOfMonth) && 'preselected-start',
+      (isEndOfPreviewing || isEndOfMonth) && 'preselected-end',
     ],
     day: [
       'day',
-      !selected && 'notSelectedDate',
-      !isHighlighting && 'dayOutsideRangeInterval',
-      !selected && isHighlighting && 'dayInsideRangeInterval',
+      !selected && 'not-selected',
+      !isHighlighting && 'day-outside',
+      !selected && isHighlighting && 'day-inside',
     ],
   };
 
@@ -98,27 +98,27 @@ const startBorderStyle = {
   borderBottomLeftRadius: '50%',
 };
 
-const DateRangePickerDayRoot = styled('div', {
-  name: 'MuiDateRangePickerDay',
+const DayRenderRoot = styled('div', {
+  name: 'day-render',
   slot: 'Root',
   overridesResolver: (_, styles) => [
     {
-      [`&.${dateRangePickerDayClasses.rangeIntervalDayHighlight}`]: styles.rangeIntervalDayHighlight,
+      [`&.${dateRangePickerDayClasses.highlight}`]: styles.highlight,
     },
     {
-      [`&.${dateRangePickerDayClasses.rangeIntervalDayHighlightStart}`]: styles.rangeIntervalDayHighlightStart,
+      [`&.${dateRangePickerDayClasses['highlight-start']}`]: styles['highlight-start'],
     },
     {
-      [`&.${dateRangePickerDayClasses.rangeIntervalDayHighlightEnd}`]: styles.rangeIntervalDayHighlightEnd,
+      [`&.${dateRangePickerDayClasses['highlight-end']}`]: styles['highlight-end'],
     },
     styles.root,
   ],
 })<{ ownerState: OwnerState }>(({ theme, ownerState }) => ({
-  [`&:first-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
+  [`&:first-of-type .${dateRangePickerDayClasses['preselected-state']}`]: {
     ...startBorderStyle,
     borderLeftColor: theme.palette.divider,
   },
-  [`&:last-of-type .${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: {
+  [`&:last-of-type .${dateRangePickerDayClasses['preselected-state']}`]: {
     ...endBorderStyle,
     borderRightColor: theme.palette.divider,
   },
@@ -142,18 +142,18 @@ const DateRangePickerDayRoot = styled('div', {
   }),
 }));
 
-const DateRangePickerDayRangeIntervalPreview = styled('div', {
-  name: 'MuiDateRangePickerDay',
-  slot: 'RangeIntervalPreview',
+const DayRenderContainer = styled('div', {
+  name: 'day-render',
+  slot: 'container',
   overridesResolver: (_, styles) => [
-    { [`&.${dateRangePickerDayClasses.rangeIntervalDayPreview}`]: styles.rangeIntervalDayPreview },
+    { [`&.${dateRangePickerDayClasses['preselected-state']}`]: styles['preselected-state'] },
     {
-      [`&.${dateRangePickerDayClasses.rangeIntervalDayPreviewStart}`]: styles.rangeIntervalDayPreviewStart,
+      [`&.${dateRangePickerDayClasses['preselected-start']}`]: styles['preselected-start'],
     },
     {
-      [`&.${dateRangePickerDayClasses.rangeIntervalDayPreviewEnd}`]: styles.rangeIntervalDayPreviewEnd,
+      [`&.${dateRangePickerDayClasses['preselected-end']}`]: styles['preselected-end'],
     },
-    styles.rangeIntervalPreview,
+    styles['preselected-base'],
   ],
 })<{ ownerState: OwnerState }>(({ theme, ownerState }) => ({
   // replace default day component margin with transparent border to avoid jumping on preview
@@ -175,13 +175,13 @@ const DateRangePickerDayRangeIntervalPreview = styled('div', {
     }),
 }));
 
-const DateRangePickerDayDay = styled(PickersDay, {
-  name: 'MuiDateRangePickerDay',
-  slot: 'Day',
+const DayRenderCore = styled(PickersDay, {
+  name: 'day-render',
+  slot: 'core',
   overridesResolver: (_, styles) => [
-    { [`&.${dateRangePickerDayClasses.dayInsideRangeInterval}`]: styles.dayInsideRangeInterval },
-    { [`&.${dateRangePickerDayClasses.dayOutsideRangeInterval}`]: styles.dayOutsideRangeInterval },
-    { [`&.${dateRangePickerDayClasses.notSelectedDate}`]: styles.notSelectedDate },
+    { [`&.${dateRangePickerDayClasses['day-inside']}`]: styles['day-inside'] },
+    { [`&.${dateRangePickerDayClasses['day-outside']}`]: styles['day-outside'] },
+    { [`&.${dateRangePickerDayClasses['not-selected']}`]: styles['not-selected'] },
     styles.day,
   ],
 })<{
@@ -234,9 +234,6 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate
   const isEndOfMonth = utils.isSameDay(day, utils.endOfMonth(day));
   const isStartOfMonth = utils.isSameDay(day, utils.startOfMonth(day));
 
-  const shouldRenderHighlight = isHighlighting && !outsideCurrentMonth;
-  const shouldRenderPreview = isPreviewing && !outsideCurrentMonth;
-
   const ownerState = {
     ...props,
     selected,
@@ -247,29 +244,20 @@ const DateRangePickerDayRaw = React.forwardRef(function DateRangePickerDay<TDate
   const classes = useUtilityClasses(ownerState);
 
   return (
-    <DateRangePickerDayRoot
-      data-mui-test={shouldRenderHighlight ? 'DateRangeHighlight' : undefined}
-      className={clsx(classes.root, className)}
-      ownerState={ownerState}
-    >
-      <DateRangePickerDayRangeIntervalPreview
-        data-mui-test={shouldRenderPreview ? 'DateRangePreview' : undefined}
-        className={classes.rangeIntervalPreview}
-        ownerState={ownerState}
-      >
-        <DateRangePickerDayDay<TDate>
+    <DayRenderRoot className={clsx(classes.root, className)} ownerState={ownerState}>
+      <DayRenderContainer className={classes.isPreselected} ownerState={ownerState}>
+        <DayRenderCore<TDate>
           {...other}
           ref={ref}
           disableMargin
           day={day}
           selected={selected}
           outsideCurrentMonth={outsideCurrentMonth}
-          data-mui-test="DateRangePickerDay"
           className={classes.day}
           ownerState={ownerState}
         />
-      </DateRangePickerDayRangeIntervalPreview>
-    </DateRangePickerDayRoot>
+      </DayRenderContainer>
+    </DayRenderRoot>
   );
 });
 
@@ -288,6 +276,7 @@ const propsAreEqual = (
   );
 };
 
+DateRangePickerDayRaw.displayName = 'DayRender';
 /**
  *
  * Demos:
