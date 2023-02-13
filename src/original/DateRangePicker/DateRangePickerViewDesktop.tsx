@@ -17,7 +17,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 import { calculateRangePreview } from './date-range-manager';
 import { DateRange } from '../../dateRangerPicker/internal/models';
-import { DateRangePickerDay, DateRangePickerDayProps } from '../DateRangePickerDay';
+import { DateRangeDay, IDateRangeDayProps } from '../day';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
 import { doNothing } from '../../dateRangerPicker/internal/utils/utils';
 import {
@@ -43,13 +43,13 @@ export interface ExportedDesktopDateRangeCalendarProps<TDate> {
   calendars?: 1 | 2 | 3;
   /**
    * Custom renderer for `<DateRangePicker />` days. @DateIOType
-   * @example (date, dateRangePickerDayProps) => <DateRangePickerDay {...dateRangePickerDayProps} />
+   * @example (date, dateRangePickerDayProps) => <DateRangeDay {...dateRangePickerDayProps} />
    * @template TDate
    * @param {TDate} day The day to render.
-   * @param {DateRangePickerDayProps<TDate>} dateRangePickerDayProps The props of the day to render.
+   * @param {IDateRangeDayProps<TDate>} dateRangePickerDayProps The props of the day to render.
    * @returns {JSX.Element} The element representing the day.
    */
-  renderDay?: (day: TDate, dateRangePickerDayProps: DateRangePickerDayProps<TDate>) => JSX.Element;
+  renderDay?: (day: TDate, dateRangePickerDayProps: IDateRangeDayProps<TDate>) => JSX.Element;
 }
 
 export interface DesktopDateRangeCalendarProps<TDate>
@@ -131,7 +131,7 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     maxDate: maxDateProp,
     minDate: minDateProp,
     onSelectedDaysChange,
-    renderDay = (_, dateRangeProps) => <DateRangePickerDay {...dateRangeProps} />,
+    renderDay = (_, dateRangeProps) => <DateRangeDay {...dateRangeProps} />,
     className,
     // excluding classes from `other` to avoid passing them down to children
     classes: providedClasses,
