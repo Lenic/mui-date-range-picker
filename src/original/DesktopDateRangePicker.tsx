@@ -1,4 +1,6 @@
-import * as React from 'react';
+import type { FC, Ref, RefAttributes } from 'react';
+
+import { forwardRef, useState } from 'react';
 import { useThemeProps } from '@mui/material/styles';
 import {
   DesktopTooltipWrapper,
@@ -15,36 +17,25 @@ import {
   dateRangePickerValueManager,
 } from './DateRangePicker/shared';
 
-const KeyboardDateInputComponent = DateRangePickerInput as unknown as React.FC<DateInputPropsLike>;
+const KeyboardDateInputComponent = DateRangePickerInput as unknown as FC<DateInputPropsLike>;
 
-export type DesktopDateRangePickerProps<TInputDate, TDate> = BaseDateRangePickerProps<TInputDate, TDate> &
-  DesktopWrapperProps;
+export type DateRangePickerProps<TInputDate, TDate> = BaseDateRangePickerProps<TInputDate, TDate> & DesktopWrapperProps;
 
 export type DesktopDateRangePickerComponent = <TInputDate, TDate = TInputDate>(
-  props: DesktopDateRangePickerProps<TInputDate, TDate> & React.RefAttributes<HTMLDivElement>
+  props: DateRangePickerProps<TInputDate, TDate> & RefAttributes<HTMLDivElement>
 ) => JSX.Element;
 
-/**
- *
- * Demos:
- *
- * - [Date Range Picker](https://mui.com/x/react-date-pickers/date-range-picker/)
- *
- * API:
- *
- * - [DesktopDateRangePicker API](https://mui.com/x/api/date-pickers/desktop-date-range-picker/)
- */
-export const DesktopDateRangePicker = React.forwardRef(function DesktopDateRangePicker<TInputDate, TDate = TInputDate>(
-  inProps: DesktopDateRangePickerProps<TInputDate, TDate>,
-  ref: React.Ref<HTMLDivElement>
+function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
+  inProps: DateRangePickerProps<TInputDate, TDate>,
+  ref: Ref<HTMLDivElement>
 ) {
   const convetedProps = useThemeProps({ props: inProps, name: 'MuiDateRangePicker' });
-  const props = useDateRangePickerDefaultizedProps<TInputDate, TDate, DesktopDateRangePickerProps<TInputDate, TDate>>(
+  const props = useDateRangePickerDefaultizedProps<TInputDate, TDate, DateRangePickerProps<TInputDate, TDate>>(
     convetedProps,
-    'MuiDesktopDateRangePicker'
+    'DateRangePicker'
   );
 
-  const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = React.useState<'start' | 'end'>('start');
+  const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = useState<'start' | 'end'>('start');
 
   const validationError = useDateRangeValidation(props);
 
@@ -79,4 +70,7 @@ export const DesktopDateRangePicker = React.forwardRef(function DesktopDateRange
       />
     </DesktopTooltipWrapper>
   );
-}) as DesktopDateRangePickerComponent;
+}
+
+DateRangePickerLogic.displayName = 'DateRangePicker';
+export const DateRangePicker = forwardRef(DateRangePickerLogic) as DesktopDateRangePickerComponent;

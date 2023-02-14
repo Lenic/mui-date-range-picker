@@ -1,6 +1,3 @@
-export { DateRangePicker } from './DateRangePicker';
-export type { DateRangePickerProps } from './DateRangePicker';
-
 export { getDateRangePickerInputUtilityClass, dateRangePickerInputClasses } from './dateRangePickerInputClasses';
 export type { DateRangePickerInputClasses, DateRangePickerInputClassKey } from './dateRangePickerInputClasses';
 export {

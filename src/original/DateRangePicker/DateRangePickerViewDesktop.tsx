@@ -1,13 +1,11 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { styled, useThemeProps } from '@mui/material/styles';
-import { unstable_composeClasses as composeClasses } from '@mui/material';
 import {
   useDefaultDates,
   useUtils,
   useLocaleText,
   PickersArrowSwitcher,
-  ExportedArrowSwitcherProps,
   usePreviousMonthDisabled,
   useNextMonthDisabled,
   DayPicker,
@@ -20,20 +18,7 @@ import { DateRange } from '../../dateRangerPicker/internal/models';
 import { DateRangeDay, IDateRangeDayProps } from '../day';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
 import { doNothing } from '../../dateRangerPicker/internal/utils/utils';
-import {
-  DateRangePickerViewDesktopClasses,
-  getDateRangePickerViewDesktopUtilityClass,
-} from './dateRangePickerViewDesktopClasses';
-
-const useUtilityClasses = (ownerState: DesktopDateRangeCalendarProps<any>) => {
-  const { classes } = ownerState;
-  const slots = {
-    root: ['root'],
-    container: ['container'],
-  };
-
-  return composeClasses(slots, getDateRangePickerViewDesktopUtilityClass, classes);
-};
+import { DateRangePickerViewDesktopClasses } from './dateRangePickerViewDesktopClasses';
 
 export interface ExportedDesktopDateRangeCalendarProps<TDate> {
   /**
@@ -55,8 +40,7 @@ export interface ExportedDesktopDateRangeCalendarProps<TDate> {
 export interface DesktopDateRangeCalendarProps<TDate>
   extends ExportedDesktopDateRangeCalendarProps<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
-    DayValidationProps<TDate>,
-    Omit<ExportedArrowSwitcherProps, 'leftArrowButtonText' | 'rightArrowButtonText'> {
+    DayValidationProps<TDate> {
   calendars: 1 | 2 | 3;
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
@@ -64,20 +48,9 @@ export interface DesktopDateRangeCalendarProps<TDate>
   classes?: Partial<DateRangePickerViewDesktopClasses>;
 }
 
-const DateRangePickerViewDesktopRoot = styled('div', {
-  name: 'MuiDateRangePickerViewDesktop',
-  slot: 'Root',
-  overridesResolver: (_, styles) => styles.root,
-})({
-  display: 'flex',
-  flexDirection: 'row',
-});
+const Container = styled('div')({ display: 'flex', flexDirection: 'row' });
 
-const DateRangePickerViewDesktopContainer = styled('div', {
-  name: 'MuiDateRangePickerViewDesktop',
-  slot: 'Container',
-  overridesResolver: (_, styles) => styles.container,
-})(({ theme }) => ({
+const Panel = styled('div')(({ theme }) => ({
   '&:not(:last-of-type)': {
     borderRight: `2px solid ${theme.palette.divider}`,
   },
@@ -87,12 +60,12 @@ const DAY_RANGE_SIZE = 40;
 
 const weeksContainerHeight = (DAY_RANGE_SIZE + DAY_MARGIN * 2) * 6;
 
-const DateRangePickerViewDesktopCalendar = styled(DayPicker)({
+const Calendar = styled(DayPicker)({
   minWidth: 312,
   minHeight: weeksContainerHeight,
 }) as typeof DayPicker;
 
-const DateRangePickerViewDesktopArrowSwitcher = styled(PickersArrowSwitcher)({
+const ArrowSwitcher = styled(PickersArrowSwitcher)({
   padding: '16px 16px 8px 16px',
   display: 'flex',
   alignItems: 'center',
@@ -121,8 +94,6 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
   const {
     calendars,
     changeMonth,
-    components,
-    componentsProps,
     currentlySelectingRangeEnd,
     currentMonth,
     parsedValue,
@@ -144,7 +115,6 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
   const rightArrowButtonText = localeText.nextMonth;
 
   const utils = useUtils<TDate>();
-  const classes = useUtilityClasses(props);
   const defaultDates = useDefaultDates<TDate>();
   const minDate = minDateProp ?? defaultDates.minDate;
   const maxDate = maxDateProp ?? defaultDates.maxDate;
@@ -193,13 +163,13 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
   }, [changeMonth, currentMonth, utils]);
 
   return (
-    <DateRangePickerViewDesktopRoot className={clsx(className, classes.root)}>
+    <Container className={clsx('desktop-container', className)}>
       {getCalendarsArray(calendars).map((_, index) => {
         const monthOnIteration = utils.setMonth(currentMonth, utils.getMonth(currentMonth) + index);
 
         return (
-          <DateRangePickerViewDesktopContainer key={index} className={classes.container}>
-            <DateRangePickerViewDesktopArrowSwitcher
+          <Panel key={index} className="desktop-panel">
+            <ArrowSwitcher
               onLeftClick={selectPreviousMonth}
               onRightClick={selectNextMonth}
               isLeftHidden={index !== 0}
@@ -207,13 +177,11 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
               isLeftDisabled={isPreviousMonthDisabled}
               isRightDisabled={isNextMonthDisabled}
               leftArrowButtonText={leftArrowButtonText}
-              components={components}
-              componentsProps={componentsProps}
               rightArrowButtonText={rightArrowButtonText}
             >
               {utils.format(monthOnIteration, 'monthAndYear')}
-            </DateRangePickerViewDesktopArrowSwitcher>
-            <DateRangePickerViewDesktopCalendar<TDate>
+            </ArrowSwitcher>
+            <Calendar<TDate>
               {...other}
               minDate={minDate}
               maxDate={maxDate}
@@ -238,9 +206,9 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
                 })
               }
             />
-          </DateRangePickerViewDesktopContainer>
+          </Panel>
         );
       })}
-    </DateRangePickerViewDesktopRoot>
+    </Container>
   );
 }
