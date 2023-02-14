@@ -31,6 +31,11 @@ export const DayRenderRoot = styled('div', { name: 'DayRoot' })(({ theme }) => (
     paddingRight: 0,
     marginRight: DAY_MARGIN / 2,
   },
+  '&.highlight-start, &.highlight-end': {
+    '&>>button.Mui-selected:hover': {
+      backgroundColor: '#1565c0 !important',
+    },
+  },
 }));
 
 export const DayRenderContainer = styled('div', { name: 'DayContainer' })(({ theme }) => ({
