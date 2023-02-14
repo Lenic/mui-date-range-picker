@@ -8,7 +8,7 @@ import { styled } from '@mui/material/styles';
 import type { Dayjs } from 'dayjs';
 import type { DateRange } from './original/DateRangePicker';
 
-import { DateRangePicker } from './original/DesktopDateRangePicker';
+import { DateRangePicker } from './original';
 
 const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer' })`
   display: flex;
