@@ -37,6 +37,7 @@ const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
     <DayRenderRoot
       className={clsx([
         className,
+        'day-root',
         isHighlighting && !outsideCurrentMonth && 'highlight',
         (isStartOfHighlighting || isStartOfMonth) && 'highlight-start',
         (isEndOfHighlighting || isEndOfMonth) && 'highlight-end',
@@ -44,6 +45,7 @@ const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
     >
       <DayRenderContainer
         className={clsx([
+          'day-container',
           isPreviewing && !outsideCurrentMonth && 'preselected',
           (isStartOfPreviewing || isStartOfMonth) && 'preselected-start',
           (isEndOfPreviewing || isEndOfMonth) && 'preselected-end',
@@ -57,6 +59,7 @@ const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
           selected={selected}
           outsideCurrentMonth={outsideCurrentMonth}
           className={clsx([
+            'day-core',
             !selected && 'not-selected',
             !isHighlighting && 'day-outside',
             !selected && isHighlighting && 'day-inside',

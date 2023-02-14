@@ -5,7 +5,7 @@ import { PickersDay, PickersDayProps } from '@mui/x-date-pickers/PickersDay';
 const endBorderStyle = { borderTopRightRadius: '50%', borderBottomRightRadius: '50%' };
 const startBorderStyle = { borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' };
 
-export const DayRenderRoot = styled('div', { name: 'DayRoot' })(({ theme }) => ({
+export const DayRenderRoot = styled('div')(({ theme }) => ({
   '&:first-of-type .preselected': {
     ...startBorderStyle,
     borderLeftColor: theme.palette.divider,
@@ -31,14 +31,12 @@ export const DayRenderRoot = styled('div', { name: 'DayRoot' })(({ theme }) => (
     paddingRight: 0,
     marginRight: DAY_MARGIN / 2,
   },
-  '&.highlight-start, &.highlight-end': {
-    '&>>button.Mui-selected:hover': {
-      backgroundColor: '#1565c0 !important',
-    },
+  '&>.day-container>.day-core.Mui-selected:hover': {
+    backgroundColor: '#1565c0 !important',
   },
 }));
 
-export const DayRenderContainer = styled('div', { name: 'DayContainer' })(({ theme }) => ({
+export const DayRenderContainer = styled('div')(({ theme }) => ({
   border: '2px solid transparent',
   '&.preselected': {
     borderRadius: 0,
@@ -56,7 +54,7 @@ export const DayRenderContainer = styled('div', { name: 'DayContainer' })(({ the
   },
 }));
 
-export const DayRenderCore = styled(PickersDay, { name: 'DayCore' })(({ theme }) => ({
+export const DayRenderCore = styled(PickersDay)(({ theme }) => ({
   transform: 'scale(1.1)',
   '&:hover': {
     backgroundColor: 'rgba(0, 0, 0, 0.04) !important',
