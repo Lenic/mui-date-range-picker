@@ -1,4 +1,6 @@
-import * as React from 'react';
+import type { PropsWithChildren, Ref } from 'react';
+
+import { forwardRef, memo } from 'react';
 import clsx from 'clsx';
 import { useThemeProps } from '@mui/material/styles';
 import { useUtils, areDayPropsEqual } from '@mui/x-date-pickers/internals';
@@ -7,9 +9,9 @@ import { DayRenderRoot, DayRenderContainer, DayRenderCore } from './components';
 
 import type { IDateRangeDayProps, TDateRangeDayComponent } from './types';
 
-const DateRangeDayLogic = React.forwardRef(function DateRangePickerDay<TDate>(
+const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
   inProps: IDateRangeDayProps<TDate>,
-  ref: React.Ref<HTMLButtonElement>
+  ref: Ref<HTMLButtonElement>
 ) {
   const props = useThemeProps({ props: inProps, name: 'DateRangeDay' });
   const {
@@ -66,8 +68,8 @@ const DateRangeDayLogic = React.forwardRef(function DateRangePickerDay<TDate>(
 });
 
 const propsAreEqual = (
-  prevProps: Readonly<React.PropsWithChildren<IDateRangeDayProps<any>>>,
-  nextProps: Readonly<React.PropsWithChildren<IDateRangeDayProps<any>>>
+  prevProps: Readonly<PropsWithChildren<IDateRangeDayProps<any>>>,
+  nextProps: Readonly<PropsWithChildren<IDateRangeDayProps<any>>>
 ) => {
   return (
     prevProps.isHighlighting === nextProps.isHighlighting &&
@@ -81,4 +83,4 @@ const propsAreEqual = (
 };
 
 DateRangeDayLogic.displayName = 'DateRangeDay';
-export const DateRangeDay = React.memo(DateRangeDayLogic, propsAreEqual) as TDateRangeDayComponent;
+export const DateRangeDay = memo(DateRangeDayLogic, propsAreEqual) as TDateRangeDayComponent;
