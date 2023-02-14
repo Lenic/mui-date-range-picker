@@ -42,7 +42,7 @@ const DateRangeDayLogic = React.forwardRef(function DateRangePickerDay<TDate>(
     >
       <DayRenderContainer
         className={clsx([
-          isPreviewing && !outsideCurrentMonth && 'preselected-state',
+          isPreviewing && !outsideCurrentMonth && 'preselected',
           (isStartOfPreviewing || isStartOfMonth) && 'preselected-start',
           (isEndOfPreviewing || isEndOfMonth) && 'preselected-end',
         ])}

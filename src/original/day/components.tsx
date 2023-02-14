@@ -6,11 +6,11 @@ const endBorderStyle = { borderTopRightRadius: '50%', borderBottomRightRadius: '
 const startBorderStyle = { borderTopLeftRadius: '50%', borderBottomLeftRadius: '50%' };
 
 export const DayRenderRoot = styled('div', { name: 'DayRoot' })(({ theme }) => ({
-  '&:first-of-type .preselected-state': {
+  '&:first-of-type .preselected': {
     ...startBorderStyle,
     borderLeftColor: theme.palette.divider,
   },
-  '&:last-of-type .preselected-state': {
+  '&:last-of-type .preselected': {
     ...endBorderStyle,
     borderRightColor: theme.palette.divider,
   },
@@ -35,7 +35,7 @@ export const DayRenderRoot = styled('div', { name: 'DayRoot' })(({ theme }) => (
 
 export const DayRenderContainer = styled('div', { name: 'DayContainer' })(({ theme }) => ({
   border: '2px solid transparent',
-  '&.preselected-state': {
+  '&.preselected': {
     borderRadius: 0,
     border: `2px dashed ${theme.palette.divider}`,
     borderLeftColor: 'transparent',
