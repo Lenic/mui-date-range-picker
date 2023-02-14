@@ -6,14 +6,14 @@ import {
   DateInputPropsLike,
   DesktopWrapperProps,
 } from '@mui/x-date-pickers/internals';
-import { DateRangePickerView } from '../DateRangePicker/DateRangePickerView';
-import { DateRangePickerInput } from '../DateRangePicker/DateRangePickerInput';
-import { useDateRangeValidation } from '../../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
+import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
+import { DateRangePickerInput } from './DateRangePicker/DateRangePickerInput';
+import { useDateRangeValidation } from './../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
 import {
   BaseDateRangePickerProps,
   useDateRangePickerDefaultizedProps,
   dateRangePickerValueManager,
-} from '../DateRangePicker/shared';
+} from './DateRangePicker/shared';
 
 const KeyboardDateInputComponent = DateRangePickerInput as unknown as React.FC<DateInputPropsLike>;
 
