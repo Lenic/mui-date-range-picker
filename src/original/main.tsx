@@ -10,7 +10,8 @@ import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from './DateRangePicker/DateRangePickerInput';
 import { useDateRangePickerDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
 
-import type { DateRangePickerProps, DateRangePickerComponent, TFocusPosition } from './types';
+import type { TFocusPosition } from './internal/models';
+import type { DateRangePickerProps, DateRangePickerComponent } from './types';
 
 function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   inProps: DateRangePickerProps<TInputDate, TDate>,

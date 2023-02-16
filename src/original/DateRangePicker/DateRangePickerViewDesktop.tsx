@@ -15,7 +15,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 
 import { DateRangeDay, IDateRangeDayProps } from '../day';
-import { DateRange } from '../internal/models';
+import { DateRange, TFocusPosition } from '../internal/models';
 import { doNothing } from '../internal/utils/utils';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
 
@@ -46,7 +46,7 @@ export interface DesktopDateRangeCalendarProps<TDate>
   calendars: 1 | 2 | 3;
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
-  currentlySelectingRangeEnd: 'start' | 'end';
+  currentlySelectingRangeEnd: TFocusPosition;
   classes?: Partial<DateRangePickerViewDesktopClasses>;
 }
 

@@ -1,11 +1,11 @@
 import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
-import { DateRange } from '../internal/models';
+import { DateRange, TFocusPosition } from '../internal/models';
 
 interface CalculateRangeChangeOptions<TDate> {
   utils: MuiPickersAdapter<TDate>;
   range: DateRange<TDate>;
   newDate: TDate;
-  currentlySelectingRangeEnd: 'start' | 'end';
+  currentlySelectingRangeEnd: TFocusPosition;
 }
 
 export function calculateRangeChange<TDate>({
@@ -14,7 +14,7 @@ export function calculateRangeChange<TDate>({
   newDate: selectedDate,
   currentlySelectingRangeEnd,
 }: CalculateRangeChangeOptions<TDate>): {
-  nextSelection: 'start' | 'end';
+  nextSelection: TFocusPosition;
   newRange: DateRange<TDate>;
 } {
   const [start, end] = range;
