@@ -20,7 +20,6 @@ import { doNothing } from '../internal/utils/utils';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
 
 import { calculateRangePreview } from './date-range-manager';
-import { DateRangePickerViewDesktopClasses } from './dateRangePickerViewDesktopClasses';
 
 export interface ExportedDesktopDateRangeCalendarProps<TDate> {
   /**
@@ -47,7 +46,6 @@ export interface DesktopDateRangeCalendarProps<TDate>
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
   currentlySelectingRangeEnd: TFocusPosition;
-  classes?: Partial<DateRangePickerViewDesktopClasses>;
 }
 
 const Container = styled('div')({ display: 'flex', flexDirection: 'row' });
@@ -91,8 +89,6 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     onSelectedDaysChange,
     renderDay = (_, dateRangeProps) => <DateRangeDay {...dateRangeProps} />,
     className,
-    // excluding classes from `other` to avoid passing them down to children
-    classes: providedClasses,
     ...other
   } = props;
 
