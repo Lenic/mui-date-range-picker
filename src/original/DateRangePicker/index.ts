@@ -9,4 +9,4 @@ export type {
   DateRangePickerViewDesktopClassKey,
 } from './dateRangePickerViewDesktopClasses';
 
-export type { DateRange } from '../../dateRangerPicker/internal/models';
+export type { DateRange } from '../internal/models';

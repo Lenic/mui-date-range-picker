@@ -11,8 +11,8 @@ import {
   useMaskedInput,
   onSpaceOrEnter,
 } from '@mui/x-date-pickers/internals';
-import { CurrentlySelectingRangeEndProps, DateRange } from '../../dateRangerPicker/internal/models/dateRange';
-import { DateRangeValidationError } from '../../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
+import { CurrentlySelectingRangeEndProps, DateRange } from '../internal/models/dateRange';
+import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRangePickerInputClasses, getDateRangePickerInputUtilityClass } from './dateRangePickerInputClasses';
 
 const useUtilityClasses = (ownerState: DateRangePickerInputProps<any, any>) => {

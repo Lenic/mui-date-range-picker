@@ -15,9 +15,9 @@ import {
 } from '@mui/x-date-pickers/internals';
 
 import { DateRangeDay, IDateRangeDayProps } from '../day';
-import { DateRange } from '../../dateRangerPicker/internal/models';
-import { doNothing } from '../../dateRangerPicker/internal/utils/utils';
-import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
+import { DateRange } from '../internal/models';
+import { doNothing } from '../internal/utils/utils';
+import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
 
 import { calculateRangePreview } from './date-range-manager';
 import { DateRangePickerViewDesktopClasses } from './dateRangePickerViewDesktopClasses';

@@ -4,7 +4,7 @@ import { forwardRef, useState } from 'react';
 import { useThemeProps } from '@mui/material/styles';
 import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/x-date-pickers/internals';
 
-import { useDateRangeValidation } from '../dateRangerPicker/internal/hooks/validation/useDateRangeValidation';
+import { useDateRangeValidation } from './internal/hooks/validation/useDateRangeValidation';
 
 import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from './DateRangePicker/DateRangePickerInput';
