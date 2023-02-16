@@ -75,7 +75,7 @@ const ArrowSwitcher = styled(PickersArrowSwitcher)(({ theme }) => ({
  * @ignore - internal component.
  */
 export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalendarProps<TDate>) {
-  const props = useThemeProps({ props: inProps, name: 'MuiDateRangePickerViewDesktop' });
+  const props = useThemeProps({ props: inProps, name: 'DesktopView' });
   const {
     calendars,
     changeMonth,
@@ -92,14 +92,24 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     ...other
   } = props;
 
+  /**
+   * 获取缺省日期设置
+   */
   const defaultDates = useDefaultDates<TDate>();
+  /**
+   * 可以选择的最小日期
+   */
   const minDate = minDateProp ?? defaultDates.minDate;
+  /**
+   * 可以选择的最大日期
+   */
   const maxDate = maxDateProp ?? defaultDates.maxDate;
 
   /**
-   * 当前鼠标 hover 的日期
+   * 当前鼠标 hover 的日期，也可以说是预选的日期
    *
    * - 如果日期在选中的区域，则设置为 `null`
+   * - 是开始还是结束日期，需要和 `currentlySelectingRangeEnd` 属性关联
    */
   const [rangePreviewDay, setRangePreviewDay] = useState<TDate | null>(null);
 
@@ -121,6 +131,12 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     currentlySelectingRangeEnd,
   });
 
+  /**
+   * 在点选日期后的操作
+   *
+   * - 首先立即置 `null` 鼠标 hover 日期，因为选中的日期上，不能有鼠标 hover 日期
+   * - 立即向上触发选择日期变更事件，更新 `parsedValue` 日期，即选中的日期范围
+   */
   const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (day) => {
       setRangePreviewDay(null);
@@ -129,6 +145,9 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     [onSelectedDaysChange]
   );
 
+  /**
+   * 在鼠标 hover 的目标日期发生变更后，更新存储的鼠标 hover 日期
+   */
   const handlePreviewDayChange = (newPreviewRequest: TDate) => {
     if (!isWithinRange(utils, newPreviewRequest, parsedValue)) {
       setRangePreviewDay(newPreviewRequest);
@@ -137,6 +156,9 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     }
   };
 
+  /**
+   * 在鼠标移出日期时，立即置 `null` 鼠标 hover 日期
+   */
   const CalendarTransitionProps = useMemo(() => ({ onMouseLeave: () => setRangePreviewDay(null) }), []);
 
   const selectNextMonth = useCallback(() => {
