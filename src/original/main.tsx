@@ -10,7 +10,7 @@ import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from './DateRangePicker/DateRangePickerInput';
 import { useDateRangePickerDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
 
-import type { DateRangePickerProps, DateRangePickerComponent } from './types';
+import type { DateRangePickerProps, DateRangePickerComponent, TFocusPosition } from './types';
 
 function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   inProps: DateRangePickerProps<TInputDate, TDate>,
@@ -23,7 +23,10 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   );
 
   const validationError = useDateRangeValidation(props);
-  const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = useState<'start' | 'end'>('start');
+  /**
+   * 当前输入的焦点在 `start` 还是在 `end`，默认值为 `start`
+   */
+  const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = useState<TFocusPosition>('start');
 
   const { pickerProps, inputProps, wrapperProps } = usePickerState(props, dateRangePickerValueManager);
 

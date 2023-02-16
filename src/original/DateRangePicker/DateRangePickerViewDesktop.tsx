@@ -1,5 +1,5 @@
-import * as React from 'react';
 import clsx from 'clsx';
+import { useCallback, useMemo, useState } from 'react';
 import { styled, useThemeProps } from '@mui/material/styles';
 import {
   useDefaultDates,
@@ -13,11 +13,13 @@ import {
   DAY_MARGIN,
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { calculateRangePreview } from './date-range-manager';
-import { DateRange } from '../../dateRangerPicker/internal/models';
+
 import { DateRangeDay, IDateRangeDayProps } from '../day';
-import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
+import { DateRange } from '../../dateRangerPicker/internal/models';
 import { doNothing } from '../../dateRangerPicker/internal/utils/utils';
+import { isWithinRange, isStartOfRange, isEndOfRange } from '../../dateRangerPicker/internal/utils/date-utils';
+
+import { calculateRangePreview } from './date-range-manager';
 import { DateRangePickerViewDesktopClasses } from './dateRangePickerViewDesktopClasses';
 
 export interface ExportedDesktopDateRangeCalendarProps<TDate> {
@@ -57,34 +59,19 @@ const Panel = styled('div')(({ theme }) => ({
 }));
 
 const DAY_RANGE_SIZE = 40;
-
 const weeksContainerHeight = (DAY_RANGE_SIZE + DAY_MARGIN * 2) * 6;
-
 const Calendar = styled(DayPicker)({
   minWidth: 312,
   minHeight: weeksContainerHeight,
 }) as typeof DayPicker;
 
-const ArrowSwitcher = styled(PickersArrowSwitcher)({
-  padding: '16px 16px 8px 16px',
+const ArrowSwitcher = styled(PickersArrowSwitcher)(({ theme }) => ({
+  padding: theme.spacing(2),
+  paddingBottom: theme.spacing(1),
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-});
-
-function getCalendarsArray(calendars: ExportedDesktopDateRangeCalendarProps<unknown>['calendars']) {
-  switch (calendars) {
-    case 1:
-      return [0];
-    case 2:
-      return [0, 0];
-    case 3:
-      return [0, 0, 0];
-    // this will not work in IE11, but allows to support any amount of calendars
-    default:
-      return new Array(calendars).fill(0);
-  }
-}
+}));
 
 /**
  * @ignore - internal component.
@@ -109,29 +96,36 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     ...other
   } = props;
 
-  const localeText = useLocaleText();
-
-  const leftArrowButtonText = localeText.previousMonth;
-  const rightArrowButtonText = localeText.nextMonth;
-
-  const utils = useUtils<TDate>();
   const defaultDates = useDefaultDates<TDate>();
   const minDate = minDateProp ?? defaultDates.minDate;
   const maxDate = maxDateProp ?? defaultDates.maxDate;
 
-  const [rangePreviewDay, setRangePreviewDay] = React.useState<TDate | null>(null);
+  /**
+   * 当前鼠标 hover 的日期
+   *
+   * - 如果日期在选中的区域，则设置为 `null`
+   */
+  const [rangePreviewDay, setRangePreviewDay] = useState<TDate | null>(null);
 
-  const isNextMonthDisabled = useNextMonthDisabled(currentMonth, { disableFuture, maxDate });
-  const isPreviousMonthDisabled = usePreviousMonthDisabled(currentMonth, { disablePast, minDate });
-
+  /**
+   * 日期操作帮助类集合
+   */
+  const utils = useUtils<TDate>();
+  /**
+   * 获取预选的开始和结束日期
+   */
   const previewingRange = calculateRangePreview({
+    // 日期操作帮助类集合
     utils,
+    // 已选中的日期范围，包含开始和结束
     range: parsedValue,
+    // 当前鼠标 hover 的日期：可 null 的日期
     newDate: rangePreviewDay,
+    // 当前处于焦点状态的输入框：开始日期输入框、结束日期输入框
     currentlySelectingRangeEnd,
   });
 
-  const handleSelectedDayChange = React.useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
+  const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (day) => {
       setRangePreviewDay(null);
       onSelectedDaysChange(day);
@@ -147,24 +141,22 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
     }
   };
 
-  const CalendarTransitionProps = React.useMemo(
-    () => ({
-      onMouseLeave: () => setRangePreviewDay(null),
-    }),
-    []
-  );
+  const CalendarTransitionProps = useMemo(() => ({ onMouseLeave: () => setRangePreviewDay(null) }), []);
 
-  const selectNextMonth = React.useCallback(() => {
+  const selectNextMonth = useCallback(() => {
     changeMonth(utils.getNextMonth(currentMonth));
   }, [changeMonth, currentMonth, utils]);
 
-  const selectPreviousMonth = React.useCallback(() => {
+  const selectPreviousMonth = useCallback(() => {
     changeMonth(utils.getPreviousMonth(currentMonth));
   }, [changeMonth, currentMonth, utils]);
 
+  const localeText = useLocaleText();
+  const isNextMonthDisabled = useNextMonthDisabled(currentMonth, { disableFuture, maxDate });
+  const isPreviousMonthDisabled = usePreviousMonthDisabled(currentMonth, { disablePast, minDate });
   return (
     <Container className={clsx('desktop-container', className)}>
-      {getCalendarsArray(calendars).map((_, index) => {
+      {new Array(calendars).fill(0).map((_, index) => {
         const monthOnIteration = utils.setMonth(currentMonth, utils.getMonth(currentMonth) + index);
 
         return (
@@ -176,8 +168,8 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
               isRightHidden={index !== calendars - 1}
               isLeftDisabled={isPreviousMonthDisabled}
               isRightDisabled={isNextMonthDisabled}
-              leftArrowButtonText={leftArrowButtonText}
-              rightArrowButtonText={rightArrowButtonText}
+              leftArrowButtonText={localeText.previousMonth}
+              rightArrowButtonText={localeText.nextMonth}
             >
               {utils.format(monthOnIteration, 'monthAndYear')}
             </ArrowSwitcher>
