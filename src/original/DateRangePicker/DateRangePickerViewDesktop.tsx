@@ -21,7 +21,7 @@ import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/d
 
 import { calculateRangePreview } from './date-range-manager';
 
-export interface ExportedDesktopDateRangeCalendarProps<TDate> {
+export interface CalendarProps<TDate> {
   /**
    * The number of calendars that render on **desktop**.
    * @default 2
@@ -39,7 +39,7 @@ export interface ExportedDesktopDateRangeCalendarProps<TDate> {
 }
 
 export interface DesktopDateRangeCalendarProps<TDate>
-  extends ExportedDesktopDateRangeCalendarProps<TDate>,
+  extends CalendarProps<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate> {
   calendars: 1 | 2 | 3;
