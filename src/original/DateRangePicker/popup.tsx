@@ -11,7 +11,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 import { DateRange, FocusPositionProps, DayValidation } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
-import { calculateRangeChange } from './date-range-manager';
+import { calculateChangeRange } from './date-range-manager';
 import type { InputProps } from './input';
 import { DesktopPopup, CalendarProps } from './popupDesktop';
 
@@ -133,10 +133,10 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
 
   const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (newDate) => {
-      const { nextSelection, newRange } = calculateRangeChange({
+      const { nextSelection, newRange } = calculateChangeRange({
         newDate,
         utils,
-        range: parsedValue,
+        highlightedRange: parsedValue,
         focusPosition,
       });
 

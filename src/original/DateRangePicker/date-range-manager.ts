@@ -1,23 +1,21 @@
 import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
 import { DateRange, TFocusPosition } from '../internal/models';
 
-interface CalculateRangeChangeOptions<TDate> {
+export interface CalculateRangeChangeOptions<TDate> {
   utils: MuiPickersAdapter<TDate>;
-  range: DateRange<TDate>;
+  highlightedRange: DateRange<TDate>;
   newDate: TDate;
   focusPosition: TFocusPosition;
 }
 
-export function calculateRangeChange<TDate>({
-  utils,
-  range,
-  newDate: selectedDate,
-  focusPosition,
-}: CalculateRangeChangeOptions<TDate>): {
+export interface ChangeRangeResult<TDate> {
   nextSelection: TFocusPosition;
   newRange: DateRange<TDate>;
-} {
-  const [start, end] = range;
+}
+
+export function calculateChangeRange<TDate>(options: CalculateRangeChangeOptions<TDate>): ChangeRangeResult<TDate> {
+  const { utils, highlightedRange, newDate: selectedDate, focusPosition } = options;
+  const [start, end] = highlightedRange;
 
   if (focusPosition === 'start') {
     return Boolean(end) && utils.isAfter(selectedDate, end!)
@@ -30,13 +28,13 @@ export function calculateRangeChange<TDate>({
     : { nextSelection: 'start', newRange: [start, selectedDate] };
 }
 
-export function calculateRangePreview<TDate>(options: CalculateRangeChangeOptions<TDate>): DateRange<TDate> {
+export function calculateHighlightRange<TDate>(options: CalculateRangeChangeOptions<TDate>): DateRange<TDate> {
   if (!options.newDate) {
     return [null, null];
   }
 
-  const [start, end] = options.range;
-  const { newRange } = calculateRangeChange(options);
+  const [start, end] = options.highlightedRange;
+  const { newRange } = calculateChangeRange(options);
 
   if (!start || !end) {
     return newRange;

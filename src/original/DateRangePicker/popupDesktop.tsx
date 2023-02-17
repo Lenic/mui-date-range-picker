@@ -19,7 +19,7 @@ import { DateRange, TFocusPosition } from '../internal/models';
 import { doNothing } from '../internal/utils/utils';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
 
-import { calculateRangePreview } from './date-range-manager';
+import { calculateHighlightRange } from './date-range-manager';
 
 export interface CalendarProps<TDate> {
   /**
@@ -115,11 +115,11 @@ export function DesktopPopup<TDate>(inProps: DesktopPopupProps<TDate>) {
   /**
    * 获取预选的开始和结束日期
    */
-  const previewingRange = calculateRangePreview({
+  const previewingRange = calculateHighlightRange({
     // 日期操作帮助类集合
     utils,
     // 已选中的日期范围，包含开始和结束
-    range: parsedValue,
+    highlightedRange: parsedValue,
     // 当前鼠标 hover 的日期：可 null 的日期
     newDate: rangePreviewDay,
     // 当前处于焦点状态的输入框：开始日期输入框、结束日期输入框
