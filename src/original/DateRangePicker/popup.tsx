@@ -23,11 +23,6 @@ export interface ExportedDateRangePickerViewProps<TDate>
       'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
     > {
   /**
-   * If `true`, after selecting `start` date calendar will not automatically switch to the month of `end` date.
-   * @default false
-   */
-  disableAutoMonthSwitching?: boolean;
-  /**
    * className applied to the root component.
    */
   className?: string;
@@ -52,7 +47,6 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
     parsedValue,
     DateInputProps,
     defaultCalendarMonth,
-    disableAutoMonthSwitching = false,
     disableFuture,
     disableHighlightToday,
     disablePast,
@@ -124,12 +118,10 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
   );
 
   useEffect(() => {
-    if (disableAutoMonthSwitching || !open) {
-      return;
-    }
+    if (!open) return;
 
     scrollToDayIfNeeded(focusPosition === 'start' ? start : end);
-  }, [focusPosition, parsedValue, disableAutoMonthSwitching, scrollToDayIfNeeded, end, open, start]);
+  }, [focusPosition, parsedValue, scrollToDayIfNeeded, end, open, start]);
 
   const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (newDate) => {
