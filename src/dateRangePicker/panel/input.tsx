@@ -36,10 +36,7 @@ type DatePickerInput = <TInputDate, TDate>(
   props: InputProps<TInputDate, TDate> & RefAttributes<HTMLDivElement>
 ) => JSX.Element;
 
-function DateRangePickerInputLogic<TInputDate, TDate>(
-  inProps: InputProps<TInputDate, TDate>,
-  ref: Ref<HTMLDivElement>
-) {
+function InputLogic<TInputDate, TDate>(inProps: InputProps<TInputDate, TDate>, ref: Ref<HTMLDivElement>) {
   const props = useThemeProps({ props: inProps, name: 'DateRangePickerInput' });
   const {
     focusPosition,
@@ -180,4 +177,4 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
 /**
  * @ignore - internal component.
  */
-export const DateRangePickerInput = forwardRef(DateRangePickerInputLogic) as DatePickerInput;
+export const Input = forwardRef(InputLogic) as DatePickerInput;

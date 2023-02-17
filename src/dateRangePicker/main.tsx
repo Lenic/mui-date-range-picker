@@ -7,7 +7,7 @@ import { useThemeProps } from '@mui/material/styles';
 import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/x-date-pickers/internals';
 
 import { Popup } from './panel/popup';
-import { DateRangePickerInput } from './panel/input';
+import { Input } from './panel/input';
 import { dateRangePickerValueManager } from './utils';
 import { useDateRangeValidation, useDefaultizedProps } from './hooks';
 
@@ -38,7 +38,7 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
     <DesktopTooltipWrapper
       {...wrapperProps}
       DateInputProps={DateInputProps}
-      KeyboardDateInputComponent={DateRangePickerInput as unknown as FC<DateInputPropsLike>}
+      KeyboardDateInputComponent={Input as unknown as FC<DateInputPropsLike>}
       PopperProps={PopperProps}
       PaperProps={PaperProps}
       TransitionComponent={TransitionComponent}
