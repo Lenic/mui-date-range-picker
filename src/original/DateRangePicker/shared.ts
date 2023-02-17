@@ -10,7 +10,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 import { useThemeProps } from '@mui/material/styles';
 
-import { parseRangeInputValue } from '../internal/utils/date-utils';
+import { parseRangeInputValue } from '../utils';
 
 export function useDefaultizedProps<TInputDate, TDate, Props extends BaseDateRangePickerProps<TInputDate, TDate>>(
   props: Props,

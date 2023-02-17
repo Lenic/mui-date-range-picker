@@ -1,4 +1,4 @@
-import type { DateRange, NonEmptyDateRange } from '../../types';
+import type { DateRange, NonEmptyDateRange } from '../types';
 
 import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
 

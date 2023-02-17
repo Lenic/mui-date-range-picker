@@ -17,8 +17,7 @@ import {
 } from '@mui/x-date-pickers/internals';
 
 import { DateRangeDay } from '../day';
-import { doNothing } from '../internal/utils/utils';
-import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
+import { doNothing, isWithinRange, isStartOfRange, isEndOfRange } from '../utils';
 
 import { calculateHighlightRange } from './date-range-manager';
 

@@ -1,4 +1,4 @@
-import type { DateRange, DayValidation, DateRangeValidationErrorValue, DateRangeValidationError } from '../../../types';
+import type { DateRange, DayValidation, DateRangeValidationErrorValue, DateRangeValidationError } from '../types';
 
 import {
   useValidation,
@@ -7,7 +7,7 @@ import {
   validateDate,
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { isRangeValid, parseRangeInputValue } from '../../utils/date-utils';
+import { isRangeValid, parseRangeInputValue } from '../utils';
 
 export interface DateRangeValidationProps<TInputDate, TDate>
   extends DayValidation<TDate>,
