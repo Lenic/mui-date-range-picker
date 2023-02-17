@@ -9,7 +9,7 @@ import {
   BaseDateValidationProps,
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { DateRange, CurrentlySelectingRangeEndProps, DayRangeValidationProps } from '../internal/models/dateRange';
+import { DateRange, CurrentlySelectingRangeEndProps, DayValidation } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import type { InputProps } from './input';
@@ -17,7 +17,7 @@ import { DateRangePickerViewDesktop, CalendarProps } from './DateRangePickerView
 
 export interface ExportedDateRangePickerViewProps<TDate>
   extends CalendarProps<TDate>,
-    DayRangeValidationProps<TDate>,
+    DayValidation<TDate>,
     Omit<
       ExportedCalendarPickerProps<TDate>,
       'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>

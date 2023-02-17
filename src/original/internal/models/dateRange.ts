@@ -17,7 +17,7 @@ export interface CurrentlySelectingRangeEndProps {
 /**
  * Props used to validate a day value in range pickers.
  */
-export interface DayRangeValidationProps<TDate> {
+export interface DayValidation<TDate> {
   /**
    * Disable specific date. @DateIOType
    * @template TDate
