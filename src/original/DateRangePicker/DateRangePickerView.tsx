@@ -40,8 +40,6 @@ interface DateRangePickerViewProps<TInputDate, TDate>
     Required<BaseDateValidationProps<TDate>> {
   calendars: 1 | 2 | 3;
   open: boolean;
-  startText: React.ReactNode;
-  endText: React.ReactNode;
   DateInputProps: InputProps<TInputDate, TDate>;
 }
 
@@ -64,7 +62,6 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     disableFuture,
     disableHighlightToday,
     disablePast,
-    endText,
     isMobileKeyboardViewOpen,
     maxDate,
     minDate,
@@ -74,7 +71,6 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     reduceAnimations = defaultReduceAnimations,
     setCurrentlySelectingRangeEnd,
     shouldDisableDate,
-    startText,
     toggleMobileKeyboardView,
     ...other
   } = props;
