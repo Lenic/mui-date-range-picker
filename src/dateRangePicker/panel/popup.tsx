@@ -51,7 +51,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
   } = props;
 
   const wrappedShouldDisableDate = useCallback(
-    (dayToTest: TDate) => shouldDisableDate?.(dayToTest, focusPosition) || false,
+    (dayToTest: TDate) => !!shouldDisableDate?.(dayToTest, focusPosition),
     [focusPosition, shouldDisableDate]
   );
 
