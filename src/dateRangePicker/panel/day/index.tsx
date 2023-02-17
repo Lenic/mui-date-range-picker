@@ -1,13 +1,13 @@
 import type { PropsWithChildren, Ref } from 'react';
 
+import type { IDateRangeDayProps } from '../../types';
+
 import { forwardRef, memo } from 'react';
 import clsx from 'clsx';
 import { useThemeProps } from '@mui/material/styles';
 import { useUtils, areDayPropsEqual } from '@mui/x-date-pickers/internals';
 
 import { DayRenderRoot, DayRenderContainer, DayRenderCore } from './components';
-
-import type { IDateRangeDayProps } from '../types';
 
 export type TDateRangeDayComponent = <TDate>(
   props: IDateRangeDayProps<TDate> & React.RefAttributes<HTMLButtonElement>
