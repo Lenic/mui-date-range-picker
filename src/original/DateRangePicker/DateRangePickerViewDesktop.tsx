@@ -70,7 +70,7 @@ const calendars = new Array(2).fill(0);
 /**
  * @ignore - internal component.
  */
-export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalendarProps<TDate>) {
+export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate>) {
   const props = useThemeProps({ props: inProps, name: 'DesktopView' });
   const {
     changeMonth,

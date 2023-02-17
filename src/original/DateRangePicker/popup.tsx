@@ -13,7 +13,7 @@ import { DateRange, CurrentlySelectingRangeEndProps, DayValidation } from '../in
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import type { InputProps } from './input';
-import { DateRangePickerViewDesktop, CalendarProps } from './DateRangePickerViewDesktop';
+import { DesktopPopup, CalendarProps } from './DateRangePickerViewDesktop';
 
 export interface ExportedDateRangePickerViewProps<TDate>
   extends CalendarProps<TDate>,
@@ -169,7 +169,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
 
   return (
     <div className={className}>
-      <DateRangePickerViewDesktop {...sharedCalendarProps} />
+      <DesktopPopup {...sharedCalendarProps} />
     </div>
   );
 }
