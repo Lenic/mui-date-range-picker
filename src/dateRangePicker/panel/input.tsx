@@ -1,6 +1,6 @@
 import type { KeyboardEvent, MouseEvent, Ref, RefAttributes } from 'react';
 
-import type { InputRender, FocusPositionProps, DateRange, ValidationErrors } from '../types';
+import type { IInputRender, IFocusPositionProps, DateRange, TValidationErrors } from '../types';
 
 import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import clsx from 'clsx';
@@ -24,10 +24,10 @@ const DateRangePickerInputRoot = styled('div')(({ theme }) => ({
 }));
 
 export interface InputProps<TInputDate, TDate>
-  extends InputRender<TInputDate, TDate>,
-    Omit<DateInputProps<TInputDate, TDate>, keyof InputRender<TInputDate, TDate> | 'rawValue' | 'validationError'>,
-    FocusPositionProps {
-  validationError: ValidationErrors;
+  extends IInputRender<TInputDate, TDate>,
+    Omit<DateInputProps<TInputDate, TDate>, keyof IInputRender<TInputDate, TDate> | 'rawValue' | 'validationError'>,
+    IFocusPositionProps {
+  validationError: TValidationErrors;
   rawValue: DateRange<TInputDate>;
   mobile?: boolean;
 }

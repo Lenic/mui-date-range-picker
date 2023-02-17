@@ -1,12 +1,12 @@
 import type { BaseDateValidationProps, DefaultizedProps } from '@mui/x-date-pickers/internals';
 
-import type { BaseDateRangePickerProps } from '../types';
+import type { IBaseDateRangePickerProps } from '../types';
 
 import { useMemo } from 'react';
 import { useThemeProps } from '@mui/material/styles';
 import { useDefaultDates, useLocaleText, useUtils, parseNonNullablePickerDate } from '@mui/x-date-pickers/internals';
 
-export function useDefaultizedProps<TInputDate, TDate, Props extends BaseDateRangePickerProps<TInputDate, TDate>>(
+export function useDefaultizedProps<TInputDate, TDate, Props extends IBaseDateRangePickerProps<TInputDate, TDate>>(
   props: Props,
   name: string
 ): DefaultizedProps<Props, keyof BaseDateValidationProps<TDate>, { inputFormat: string }> {

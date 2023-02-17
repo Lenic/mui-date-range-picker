@@ -1,39 +1,20 @@
-import type { DateRange, IDateRangeDayProps, TFocusPosition } from '../types';
+import type { DayPickerProps, DayValidationProps } from '@mui/x-date-pickers/internals';
+
+import type { DateRange, ICalendarRender, TFocusPosition } from '../types';
 
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 import { styled, useThemeProps } from '@mui/material/styles';
-import {
-  useDefaultDates,
-  useUtils,
-  useLocaleText,
-  PickersArrowSwitcher,
-  usePreviousMonthDisabled,
-  useNextMonthDisabled,
-  DayPicker,
-  DayPickerProps,
-  DAY_MARGIN,
-  DayValidationProps,
-} from '@mui/x-date-pickers/internals';
+import { DayPicker, DAY_MARGIN } from '@mui/x-date-pickers/internals';
+import { useDefaultDates, useUtils, useLocaleText } from '@mui/x-date-pickers/internals';
+import { PickersArrowSwitcher, usePreviousMonthDisabled, useNextMonthDisabled } from '@mui/x-date-pickers/internals';
 
 import { calculateHighlightRange, doNothing, isWithinRange, isStartOfRange, isEndOfRange } from '../utils';
 
 import { DateRangeDay } from './day';
 
-export interface CalendarRender<TDate> {
-  /**
-   * Custom renderer for `<DateRangePicker />` days. @DateIOType
-   * @example (date, dateRangePickerDayProps) => <DateRangeDay {...dateRangePickerDayProps} />
-   * @template TDate
-   * @param {TDate} day The day to render.
-   * @param {IDateRangeDayProps<TDate>} dateRangePickerDayProps The props of the day to render.
-   * @returns {JSX.Element} The element representing the day.
-   */
-  renderDay?: (day: TDate, dateRangePickerDayProps: IDateRangeDayProps<TDate>) => JSX.Element;
-}
-
 export interface DesktopPopupProps<TDate>
-  extends CalendarRender<TDate>,
+  extends ICalendarRender<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate> {
   parsedValue: DateRange<TDate>;
@@ -44,9 +25,7 @@ export interface DesktopPopupProps<TDate>
 const Container = styled('div')({ display: 'flex', flexDirection: 'row' });
 
 const Panel = styled('div')(({ theme }) => ({
-  '&:not(:last-of-type)': {
-    borderRight: `2px solid ${theme.palette.divider}`,
-  },
+  '&:not(:last-of-type)': { borderRight: `2px solid ${theme.palette.divider}` },
 }));
 
 const DAY_RANGE_SIZE = 40;

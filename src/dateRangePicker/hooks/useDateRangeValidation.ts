@@ -1,14 +1,14 @@
 import type { BaseDateValidationProps, ValidationProps, Validator } from '@mui/x-date-pickers/internals';
 
-import type { DateRange, DayValidation, TFocusPosition, ValidationError, ValidationErrors } from '../types';
+import type { DateRange, IDayValidation, TFocusPosition, ValidationError, TValidationErrors } from '../types';
 
 import { useValidation, validateDate } from '@mui/x-date-pickers/internals';
 
 import { isRangeValid, parseValue } from '../utils';
 
-export type TValidationProps<TInputDate, TDate> = DayValidation<TDate> &
+export type TValidationProps<TInputDate, TDate> = IDayValidation<TDate> &
   Required<BaseDateValidationProps<TDate>> &
-  ValidationProps<ValidationErrors, DateRange<TInputDate>>;
+  ValidationProps<TValidationErrors, DateRange<TInputDate>>;
 
 export const validateDateRange: Validator<any, TValidationProps<any, any>> = ({ props, value, adapter }) => {
   const [start, end] = value;
@@ -45,10 +45,10 @@ export const validateDateRange: Validator<any, TValidationProps<any, any>> = ({ 
   return [null, null];
 };
 
-export function isSameError(a: ValidationErrors, b: ValidationErrors | null) {
+export function isSameError(a: TValidationErrors, b: TValidationErrors | null) {
   return b !== null && a[1] === b[1] && a[0] === b[0];
 }
 
 export function useDateRangeValidation<TInputDate, TDate>(props: TValidationProps<TInputDate, TDate>) {
-  return useValidation(props, validateDateRange, isSameError) as ValidationErrors;
+  return useValidation(props, validateDateRange, isSameError) as TValidationErrors;
 }

@@ -1,4 +1,4 @@
-import type { CalendarProps, DateRange, FocusPositionProps } from '../types';
+import type { ICalendarProps, DateRange, IFocusPositionProps } from '../types';
 
 import { useCallback, useEffect } from 'react';
 import {
@@ -16,8 +16,8 @@ import type { InputProps } from './input';
 import { DesktopPopup } from './popupDesktop';
 
 interface PopupProps<TInputDate, TDate>
-  extends FocusPositionProps,
-    CalendarProps<TDate>,
+  extends IFocusPositionProps,
+    ICalendarProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
     Required<BaseDateValidationProps<TDate>> {
   open: boolean;

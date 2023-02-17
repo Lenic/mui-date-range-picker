@@ -1,21 +1,14 @@
-import type { ReactElement, RefAttributes } from 'react';
-import type { DesktopWrapperProps } from '@mui/x-date-pickers/internals';
-
-import type {
-  BasePickerProps,
-  DateValidationError,
-  ValidationProps,
-  BaseDateValidationProps,
-  ExportedDateInputProps,
-  MuiTextFieldProps,
-} from '@mui/x-date-pickers/internals';
 import type { SxProps } from '@mui/system';
 import type { Theme } from '@mui/material/styles';
+import type { ReactElement, RefAttributes } from 'react';
 import type { PickersDayProps } from '@mui/x-date-pickers/PickersDay';
+import type { DesktopWrapperProps } from '@mui/x-date-pickers/internals';
+import type { ExportedCalendarPickerProps, DayValidationProps } from '@mui/x-date-pickers/internals';
+import type { BasePickerProps, DateValidationError, ValidationProps } from '@mui/x-date-pickers/internals';
+import type { BaseDateValidationProps, ExportedDateInputProps, MuiTextFieldProps } from '@mui/x-date-pickers/internals';
 
-import { ExportedCalendarPickerProps, DayValidationProps } from '@mui/x-date-pickers/internals';
-
-export interface InputRender<TInputDate, TDate> extends Omit<ExportedDateInputProps<TInputDate, TDate>, 'renderInput'> {
+export interface IInputRender<TInputDate, TDate>
+  extends Omit<ExportedDateInputProps<TInputDate, TDate>, 'renderInput'> {
   /**
    * The `renderInput` prop allows you to customize the rendered input.
    * The `startProps` and `endProps` arguments of this render prop contains props of [TextField](https://mui.com/material-ui/api/text-field/#props),
@@ -42,7 +35,7 @@ export interface InputRender<TInputDate, TDate> extends Omit<ExportedDateInputPr
 }
 
 export type DateRange<TDate> = [TDate | null, TDate | null];
-export type NonEmptyDateRange<TDate> = [TDate, TDate];
+export type TNonEmptyDateRange<TDate> = [TDate, TDate];
 
 /**
  * 当前输入的焦点在哪个位置
@@ -52,7 +45,7 @@ export type NonEmptyDateRange<TDate> = [TDate, TDate];
  */
 export type TFocusPosition = 'start' | 'end';
 
-export interface FocusPositionProps {
+export interface IFocusPositionProps {
   focusPosition: TFocusPosition;
   setFocusPosition: (position: TFocusPosition) => void;
 }
@@ -60,7 +53,7 @@ export interface FocusPositionProps {
 /**
  * Props used to validate a day value in range pickers.
  */
-export interface DayValidation<TDate> {
+export interface IDayValidation<TDate> {
   /**
    * Disable specific date. @DateIOType
    * @template TDate
@@ -103,7 +96,7 @@ export interface IDateRangeDayProps<TDate>
   sx?: SxProps<Theme>;
 }
 
-export interface CalendarRender<TDate> {
+export interface ICalendarRender<TDate> {
   /**
    * Custom renderer for `<DateRangePicker />` days. @DateIOType
    * @example (date, dateRangePickerDayProps) => <DateRangeDay {...dateRangePickerDayProps} />
@@ -115,12 +108,15 @@ export interface CalendarRender<TDate> {
   renderDay?: (day: TDate, dateRangePickerDayProps: IDateRangeDayProps<TDate>) => JSX.Element;
 }
 
-type CalendarPickerProps<TDate> = Omit<
+type TCalendarPickerProps<TDate> = Omit<
   ExportedCalendarPickerProps<TDate>,
   'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
 >;
 
-export interface CalendarProps<TDate> extends CalendarRender<TDate>, DayValidation<TDate>, CalendarPickerProps<TDate> {
+export interface ICalendarProps<TDate>
+  extends ICalendarRender<TDate>,
+    IDayValidation<TDate>,
+    TCalendarPickerProps<TDate> {
   /**
    * className applied to the root component.
    */
@@ -129,19 +125,19 @@ export interface CalendarProps<TDate> extends CalendarRender<TDate>, DayValidati
 
 export type ValidationError = DateValidationError | 'invalidRange' | null;
 
-export type ValidationErrors = [ValidationError, ValidationError];
+export type TValidationErrors = [ValidationError, ValidationError];
 
-export interface BaseDateRangePickerProps<TInputDate, TDate>
+export interface IBaseDateRangePickerProps<TInputDate, TDate>
   extends Omit<BasePickerProps<DateRange<TInputDate>, DateRange<TDate>>, 'orientation'>,
-    CalendarProps<TDate>,
+    ICalendarProps<TDate>,
     BaseDateValidationProps<TDate>,
-    ValidationProps<ValidationErrors, DateRange<TInputDate>>,
-    InputRender<TInputDate, TDate> {
+    ValidationProps<TValidationErrors, DateRange<TInputDate>>,
+    IInputRender<TInputDate, TDate> {
   /**
    * Custom mask. Can be used to override generate from format. (e.g. `__/__/____ __:__` or `__/__/____ __:__ _M`).
    * @default '__/__/____'
    */
-  mask?: InputRender<TInputDate, TDate>['mask'];
+  mask?: IInputRender<TInputDate, TDate>['mask'];
   /**
    * Callback fired when the value (the selected date range) changes @DateIOType.
    * @template TDate
@@ -151,12 +147,12 @@ export interface BaseDateRangePickerProps<TInputDate, TDate>
   onChange: (date: DateRange<TDate>, keyboardInputValue?: string) => void;
 }
 
-export type DateRangePickerProps<TInputDate, TDate> = Omit<
-  BaseDateRangePickerProps<TInputDate, TDate>,
+export type TDateRangePickerProps<TInputDate, TDate> = Omit<
+  IBaseDateRangePickerProps<TInputDate, TDate>,
   'endText' | 'startText'
 > &
   DesktopWrapperProps;
 
-export type DateRangePickerComponent = <TInputDate, TDate = TInputDate>(
-  props: DateRangePickerProps<TInputDate, TDate> & RefAttributes<HTMLDivElement>
+export type TDateRangePickerComponent = <TInputDate, TDate = TInputDate>(
+  props: TDateRangePickerProps<TInputDate, TDate> & RefAttributes<HTMLDivElement>
 ) => JSX.Element;

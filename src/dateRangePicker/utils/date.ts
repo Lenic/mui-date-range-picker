@@ -1,6 +1,6 @@
 import type { MuiPickersAdapter, PickerStateValueManager } from '@mui/x-date-pickers/internals';
 
-import type { DateRange, NonEmptyDateRange } from '../types';
+import type { DateRange, TNonEmptyDateRange } from '../types';
 
 export const parseValue = <TDate>(utils: MuiPickersAdapter<TDate>, value: DateRange<TDate> = [null, null]) =>
   value.map((date) => {
@@ -21,7 +21,7 @@ export const dateRangePickerValueManager: PickerStateValueManager<[any, any], [a
 export const isRangeValid = <TDate>(
   utils: MuiPickersAdapter<TDate>,
   range: DateRange<TDate> | null
-): range is NonEmptyDateRange<TDate> => {
+): range is TNonEmptyDateRange<TDate> => {
   return !!(range && range[0] && range[1] && !utils.isBefore(range[1], range[0]));
 };
 

@@ -1,6 +1,6 @@
 import type { FC, Ref } from 'react';
 
-import type { DateRangePickerProps, DateRangePickerComponent, TFocusPosition } from './types';
+import type { TDateRangePickerProps, TDateRangePickerComponent, TFocusPosition } from './types';
 
 import { forwardRef, useMemo, useState } from 'react';
 import { useThemeProps } from '@mui/material/styles';
@@ -12,11 +12,11 @@ import { dateRangePickerValueManager } from './utils';
 import { useDateRangeValidation, useDefaultizedProps } from './hooks';
 
 function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
-  inProps: DateRangePickerProps<TInputDate, TDate>,
+  inProps: TDateRangePickerProps<TInputDate, TDate>,
   ref: Ref<HTMLDivElement>
 ) {
   const convetedProps = useThemeProps({ props: inProps, name: 'DateRangePicker' });
-  const props = useDefaultizedProps<TInputDate, TDate, DateRangePickerProps<TInputDate, TDate>>(
+  const props = useDefaultizedProps<TInputDate, TDate, TDateRangePickerProps<TInputDate, TDate>>(
     convetedProps,
     'DateRangePicker'
   );
@@ -56,4 +56,4 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
 }
 
 DateRangePickerLogic.displayName = 'DateRangePicker';
-export const DateRangePicker = forwardRef(DateRangePickerLogic) as DateRangePickerComponent;
+export const DateRangePicker = forwardRef(DateRangePickerLogic) as TDateRangePickerComponent;
