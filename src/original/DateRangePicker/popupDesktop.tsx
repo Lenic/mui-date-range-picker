@@ -21,7 +21,7 @@ import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/d
 
 import { calculateHighlightRange } from './date-range-manager';
 
-export interface CalendarProps<TDate> {
+export interface CalendarRender<TDate> {
   /**
    * Custom renderer for `<DateRangePicker />` days. @DateIOType
    * @example (date, dateRangePickerDayProps) => <DateRangeDay {...dateRangePickerDayProps} />
@@ -34,7 +34,7 @@ export interface CalendarProps<TDate> {
 }
 
 export interface DesktopPopupProps<TDate>
-  extends CalendarProps<TDate>,
+  extends CalendarRender<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate> {
   parsedValue: DateRange<TDate>;

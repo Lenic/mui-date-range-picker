@@ -10,7 +10,7 @@ import {
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { useThemeProps } from '@mui/material/styles';
-import { ExportedDateRangePickerViewProps } from './popup';
+import { CalendarProps } from './popup';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRange } from '../internal/models';
 import { parseRangeInputValue } from '../internal/utils/date-utils';
@@ -18,7 +18,7 @@ import { ExportedDateRangePickerInputProps } from './input';
 
 export interface BaseDateRangePickerProps<TInputDate, TDate>
   extends Omit<BasePickerProps<DateRange<TInputDate>, DateRange<TDate>>, 'orientation'>,
-    ExportedDateRangePickerViewProps<TDate>,
+    CalendarProps<TDate>,
     BaseDateValidationProps<TDate>,
     ValidationProps<DateRangeValidationError, DateRange<TInputDate>>,
     ExportedDateRangePickerInputProps<TInputDate, TDate> {

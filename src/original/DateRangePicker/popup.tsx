@@ -13,15 +13,14 @@ import { DateRange, FocusPositionProps, DayValidation } from '../internal/models
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateChangeRange } from './date-range-manager';
 import type { InputProps } from './input';
-import { DesktopPopup, CalendarProps } from './popupDesktop';
+import { DesktopPopup, CalendarRender } from './popupDesktop';
 
-export interface ExportedDateRangePickerViewProps<TDate>
-  extends CalendarProps<TDate>,
-    DayValidation<TDate>,
-    Omit<
-      ExportedCalendarPickerProps<TDate>,
-      'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
-    > {
+type CalendarPickerProps<TDate> = Omit<
+  ExportedCalendarPickerProps<TDate>,
+  'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
+>;
+
+export interface CalendarProps<TDate> extends CalendarRender<TDate>, DayValidation<TDate>, CalendarPickerProps<TDate> {
   /**
    * className applied to the root component.
    */
@@ -30,7 +29,7 @@ export interface ExportedDateRangePickerViewProps<TDate>
 
 interface PopupProps<TInputDate, TDate>
   extends FocusPositionProps,
-    ExportedDateRangePickerViewProps<TDate>,
+    CalendarProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
     Required<BaseDateValidationProps<TDate>> {
   open: boolean;
