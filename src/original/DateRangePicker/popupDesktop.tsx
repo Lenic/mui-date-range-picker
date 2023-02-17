@@ -33,7 +33,7 @@ export interface CalendarProps<TDate> {
   renderDay?: (day: TDate, dateRangePickerDayProps: IDateRangeDayProps<TDate>) => JSX.Element;
 }
 
-export interface DesktopDateRangeCalendarProps<TDate>
+export interface DesktopPopupProps<TDate>
   extends CalendarProps<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate> {
@@ -70,7 +70,7 @@ const calendars = new Array(2).fill(0);
 /**
  * @ignore - internal component.
  */
-export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate>) {
+export function DesktopPopup<TDate>(inProps: DesktopPopupProps<TDate>) {
   const props = useThemeProps({ props: inProps, name: 'DesktopView' });
   const {
     changeMonth,
