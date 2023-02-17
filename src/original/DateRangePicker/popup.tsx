@@ -1,31 +1,18 @@
+import type { CalendarProps, DateRange, FocusPositionProps } from '../types';
+
 import { useCallback, useEffect } from 'react';
 import {
   useUtils,
   defaultReduceAnimations,
-  ExportedCalendarPickerProps,
   useCalendarState,
   PickerStatePickerProps,
   DayPickerProps,
   BaseDateValidationProps,
-  DayValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { DateRange, FocusPositionProps, DayValidation } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateChangeRange } from './date-range-manager';
 import type { InputProps } from './input';
-import { DesktopPopup, CalendarRender } from './popupDesktop';
-
-type CalendarPickerProps<TDate> = Omit<
-  ExportedCalendarPickerProps<TDate>,
-  'onYearChange' | 'renderDay' | keyof BaseDateValidationProps<TDate> | keyof DayValidationProps<TDate>
->;
-
-export interface CalendarProps<TDate> extends CalendarRender<TDate>, DayValidation<TDate>, CalendarPickerProps<TDate> {
-  /**
-   * className applied to the root component.
-   */
-  className?: string;
-}
+import { DesktopPopup } from './popupDesktop';
 
 interface PopupProps<TInputDate, TDate>
   extends FocusPositionProps,

@@ -7,7 +7,11 @@ import { useUtils, areDayPropsEqual } from '@mui/x-date-pickers/internals';
 
 import { DayRenderRoot, DayRenderContainer, DayRenderCore } from './components';
 
-import type { IDateRangeDayProps, TDateRangeDayComponent } from './types';
+import type { IDateRangeDayProps } from '../types';
+
+export type TDateRangeDayComponent = <TDate>(
+  props: IDateRangeDayProps<TDate> & React.RefAttributes<HTMLButtonElement>
+) => JSX.Element;
 
 const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
   inProps: IDateRangeDayProps<TDate>,

@@ -1,4 +1,6 @@
-import type { KeyboardEvent, MouseEvent, ReactElement, Ref, RefAttributes } from 'react';
+import type { KeyboardEvent, MouseEvent, Ref, RefAttributes } from 'react';
+
+import type { InputRender, FocusPositionProps, DateRange, DateRangeValidationError } from '../types';
 
 import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import clsx from 'clsx';
@@ -8,13 +10,9 @@ import {
   useLocaleText,
   executeInTheNextEventLoopTick,
   DateInputProps,
-  ExportedDateInputProps,
-  MuiTextFieldProps,
   useMaskedInput,
   onSpaceOrEnter,
 } from '@mui/x-date-pickers/internals';
-import { FocusPositionProps, DateRange } from '../internal/models/dateRange';
-import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 
 const DateRangePickerInputRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -25,39 +23,9 @@ const DateRangePickerInputRoot = styled('div')(({ theme }) => ({
   },
 }));
 
-export interface ExportedDateRangePickerInputProps<TInputDate, TDate>
-  extends Omit<ExportedDateInputProps<TInputDate, TDate>, 'renderInput'> {
-  /**
-   * The `renderInput` prop allows you to customize the rendered input.
-   * The `startProps` and `endProps` arguments of this render prop contains props of [TextField](https://mui.com/material-ui/api/text-field/#props),
-   * that you need to forward to the range start/end inputs respectively.
-   * Pay specific attention to the `ref` and `inputProps` keys.
-   * @example
-   * ```jsx
-   * <DateRangePicker
-   *  renderInput={(startProps, endProps) => (
-   *   <React.Fragment>
-   *     <TextField {...startProps} />
-   *     <Box sx={{ mx: 2 }}> to </Box>
-   *     <TextField {...endProps} />
-   *   </React.Fragment>;
-   *  )}
-   * />
-   * ````
-   * @param {MuiTextFieldProps} startProps Props that you need to forward to the range start input.
-   * @param {MuiTextFieldProps} endProps Props that you need to forward to the range end input.
-   * @returns {React.ReactElement} The range input to render.
-   */
-  renderInput: (startProps: MuiTextFieldProps, endProps: MuiTextFieldProps) => ReactElement;
-  onChange: (date: DateRange<TDate>, keyboardInputValue?: string) => void;
-}
-
 export interface InputProps<TInputDate, TDate>
-  extends ExportedDateRangePickerInputProps<TInputDate, TDate>,
-    Omit<
-      DateInputProps<TInputDate, TDate>,
-      keyof ExportedDateRangePickerInputProps<TInputDate, TDate> | 'rawValue' | 'validationError'
-    >,
+  extends InputRender<TInputDate, TDate>,
+    Omit<DateInputProps<TInputDate, TDate>, keyof InputRender<TInputDate, TDate> | 'rawValue' | 'validationError'>,
     FocusPositionProps {
   validationError: DateRangeValidationError;
   rawValue: DateRange<TInputDate>;

@@ -1,5 +1,6 @@
-import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
-import { DateRange, TFocusPosition } from '../internal/models';
+import type { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
+
+import type { DateRange, TFocusPosition } from '../types';
 
 export interface CalculateRangeChangeOptions<TDate> {
   utils: MuiPickersAdapter<TDate>;

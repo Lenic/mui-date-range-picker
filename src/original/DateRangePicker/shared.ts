@@ -1,46 +1,21 @@
+import type { BaseDateRangePickerProps } from '../types';
 import {
-  BasePickerProps,
   PickerStateValueManager,
   useDefaultDates,
   useLocaleText,
   useUtils,
-  ValidationProps,
   DefaultizedProps,
   parseNonNullablePickerDate,
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { useThemeProps } from '@mui/material/styles';
-import { CalendarProps } from './popup';
-import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
-import { DateRange } from '../internal/models';
+
 import { parseRangeInputValue } from '../internal/utils/date-utils';
-import { ExportedDateRangePickerInputProps } from './input';
 
-export interface BaseDateRangePickerProps<TInputDate, TDate>
-  extends Omit<BasePickerProps<DateRange<TInputDate>, DateRange<TDate>>, 'orientation'>,
-    CalendarProps<TDate>,
-    BaseDateValidationProps<TDate>,
-    ValidationProps<DateRangeValidationError, DateRange<TInputDate>>,
-    ExportedDateRangePickerInputProps<TInputDate, TDate> {
-  /**
-   * Custom mask. Can be used to override generate from format. (e.g. `__/__/____ __:__` or `__/__/____ __:__ _M`).
-   * @default '__/__/____'
-   */
-  mask?: ExportedDateRangePickerInputProps<TInputDate, TDate>['mask'];
-  /**
-   * Callback fired when the value (the selected date range) changes @DateIOType.
-   * @template TDate
-   * @param {DateRange<TDate>} date The new parsed date range.
-   * @param {string} keyboardInputValue The current value of the keyboard input.
-   */
-  onChange: (date: DateRange<TDate>, keyboardInputValue?: string) => void;
-}
-
-export function useDateRangePickerDefaultizedProps<
-  TInputDate,
-  TDate,
-  Props extends BaseDateRangePickerProps<TInputDate, TDate>
->(props: Props, name: string): DefaultizedProps<Props, keyof BaseDateValidationProps<TDate>, { inputFormat: string }> {
+export function useDefaultizedProps<TInputDate, TDate, Props extends BaseDateRangePickerProps<TInputDate, TDate>>(
+  props: Props,
+  name: string
+): DefaultizedProps<Props, keyof BaseDateValidationProps<TDate>, { inputFormat: string }> {
   const utils = useUtils<TDate>();
   const defaultDates = useDefaultDates<TDate>();
 

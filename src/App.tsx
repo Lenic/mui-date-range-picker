@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
 import type { Dayjs } from 'dayjs';
-import type { DateRange } from './original/DateRangePicker';
+import type { DateRange } from './original';
 
 import { DateRangePicker } from './original';
 

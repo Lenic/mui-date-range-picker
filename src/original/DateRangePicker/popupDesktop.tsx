@@ -1,3 +1,5 @@
+import { DateRange, IDateRangeDayProps, TFocusPosition } from '../types';
+
 import clsx from 'clsx';
 import { useCallback, useMemo, useState } from 'react';
 import { styled, useThemeProps } from '@mui/material/styles';
@@ -14,8 +16,7 @@ import {
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
 
-import { DateRangeDay, IDateRangeDayProps } from '../day';
-import { DateRange, TFocusPosition } from '../internal/models';
+import { DateRangeDay } from '../day';
 import { doNothing } from '../internal/utils/utils';
 import { isWithinRange, isStartOfRange, isEndOfRange } from '../internal/utils/date-utils';
 

@@ -1,13 +1,13 @@
+import type { DateRange, DayValidation, DateRangeValidationErrorValue, DateRangeValidationError } from '../../../types';
+
 import {
   useValidation,
   ValidationProps,
   Validator,
-  DateValidationError,
   validateDate,
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { isRangeValid, parseRangeInputValue } from '../../utils/date-utils';
-import { DateRange, DayValidation } from '../../models/dateRange';
 
 export interface DateRangeValidationProps<TInputDate, TDate>
   extends DayValidation<TDate>,
@@ -53,10 +53,6 @@ export const validateDateRange: Validator<any, DateRangeValidationProps<any, any
 
   return [null, null];
 };
-
-type DateRangeValidationErrorValue = DateValidationError | 'invalidRange' | null;
-
-export type DateRangeValidationError = [DateRangeValidationErrorValue, DateRangeValidationErrorValue];
 
 export const isSameDateRangeError = (a: DateRangeValidationError, b: DateRangeValidationError | null) =>
   b !== null && a[1] === b[1] && a[0] === b[0];
