@@ -2,7 +2,7 @@ import type { MuiPickersAdapter, PickerStateValueManager } from '@mui/x-date-pic
 
 import type { DateRange, NonEmptyDateRange } from '../types';
 
-export const parseRangeInputValue = <TDate>(utils: MuiPickersAdapter<TDate>, value: DateRange<any> = [null, null]) =>
+export const parseValue = <TDate>(utils: MuiPickersAdapter<TDate>, value: DateRange<TDate> = [null, null]) =>
   value.map((date) => {
     if (date === null || !utils.isValid(date)) {
       return null;
@@ -14,7 +14,7 @@ export const parseRangeInputValue = <TDate>(utils: MuiPickersAdapter<TDate>, val
 export const dateRangePickerValueManager: PickerStateValueManager<[any, any], [any, any], any> = {
   emptyValue: [null, null],
   getTodayValue: (utils) => [utils.date()!, utils.date()!],
-  parseInput: parseRangeInputValue,
+  parseInput: parseValue,
   areValuesEqual: (utils, a, b) => utils.isEqual(a[0], b[0]) && utils.isEqual(a[1], b[1]),
 };
 

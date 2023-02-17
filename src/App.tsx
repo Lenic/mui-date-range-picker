@@ -1,6 +1,7 @@
 import type { Dayjs } from 'dayjs';
 import type { DateRange } from './dateRangePicker';
 
+import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
@@ -14,8 +15,10 @@ const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer
   display: flex;
 `;
 
+const defaultValue: DateRange<Dayjs> = [dayjs().startOf('day'), dayjs().add(30, 'days')];
+
 function App() {
-  const [value, setValue] = useState<DateRange<Dayjs>>([null, null]);
+  const [value, setValue] = useState<DateRange<Dayjs>>(defaultValue);
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div>abc</div>

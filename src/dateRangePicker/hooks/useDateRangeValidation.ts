@@ -4,7 +4,7 @@ import type { DateRange, DayValidation, TFocusPosition, ValidationError, Validat
 
 import { useValidation, validateDate } from '@mui/x-date-pickers/internals';
 
-import { isRangeValid, parseRangeInputValue } from '../utils';
+import { isRangeValid, parseValue } from '../utils';
 
 export type TValidationProps<TInputDate, TDate> = DayValidation<TDate> &
   Required<BaseDateValidationProps<TDate>> &
@@ -39,7 +39,7 @@ export const validateDateRange: Validator<any, TValidationProps<any, any>> = ({ 
 
   if (ans[0] || ans[1]) return ans;
 
-  if (!isRangeValid(adapter.utils, parseRangeInputValue(adapter.utils, value))) {
+  if (!isRangeValid(adapter.utils, parseValue(adapter.utils, value))) {
     return ['invalidRange', 'invalidRange'];
   }
   return [null, null];
