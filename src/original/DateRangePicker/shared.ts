@@ -1,6 +1,4 @@
-import * as React from 'react';
 import {
-  buildDeprecatedPropsWarning,
   BasePickerProps,
   PickerStateValueManager,
   useDefaultDates,
@@ -12,7 +10,7 @@ import {
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { useThemeProps } from '@mui/material/styles';
-import { ExportedDateRangePickerViewProps } from './DateRangePickerView';
+import { ExportedDateRangePickerViewProps } from './popup';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRange } from '../internal/models';
 import { parseRangeInputValue } from '../internal/utils/date-utils';
@@ -25,12 +23,6 @@ export interface BaseDateRangePickerProps<TInputDate, TDate>
     ValidationProps<DateRangeValidationError, DateRange<TInputDate>>,
     ExportedDateRangePickerInputProps<TInputDate, TDate> {
   /**
-   * Text for end input label and toolbar placeholder.
-   * @default 'End'
-   * @deprecated Use the `localeText` prop of `LocalizationProvider` instead, see https://mui.com/x/react-date-pickers/localization/.
-   */
-  endText?: React.ReactNode;
-  /**
    * Custom mask. Can be used to override generate from format. (e.g. `__/__/____ __:__` or `__/__/____ __:__ _M`).
    * @default '__/__/____'
    */
@@ -42,30 +34,13 @@ export interface BaseDateRangePickerProps<TInputDate, TDate>
    * @param {string} keyboardInputValue The current value of the keyboard input.
    */
   onChange: (date: DateRange<TDate>, keyboardInputValue?: string) => void;
-  /**
-   * Text for start input label and toolbar placeholder.
-   * @default 'Start'
-   * @deprecated Use the `localeText` prop of `LocalizationProvider` instead, see https://mui.com/x/react-date-pickers/localization/.
-   */
-  startText?: React.ReactNode;
 }
-
-const deprecatedPropsWarning = buildDeprecatedPropsWarning(
-  'Props for translation are deprecated. See https://mui.com/x/react-date-pickers/localization for more information.'
-);
 
 export function useDateRangePickerDefaultizedProps<
   TInputDate,
   TDate,
   Props extends BaseDateRangePickerProps<TInputDate, TDate>
->(
-  props: Props,
-  name: string
-): DefaultizedProps<
-  Props,
-  'calendars' | 'startText' | 'endText' | keyof BaseDateValidationProps<TDate>,
-  { inputFormat: string }
-> {
+>(props: Props, name: string): DefaultizedProps<Props, keyof BaseDateValidationProps<TDate>, { inputFormat: string }> {
   const utils = useUtils<TDate>();
   const defaultDates = useDefaultDates<TDate>();
 
@@ -76,24 +51,14 @@ export function useDateRangePickerDefaultizedProps<
     name,
   });
 
-  deprecatedPropsWarning({
-    startText: themeProps.startText,
-    endText: themeProps.endText,
-  });
-
   const localeText = useLocaleText();
-
-  const startText = themeProps.startText ?? localeText.start;
-  const endText = themeProps.endText ?? localeText.end;
-
   return {
     disableFuture: false,
     disablePast: false,
-    calendars: 2,
     inputFormat: utils.formats.keyboardDate,
     ...themeProps,
-    endText,
-    startText,
+    endText: localeText.end,
+    startText: localeText.start,
     minDate: parseNonNullablePickerDate(utils, themeProps.minDate, defaultDates.minDate),
     maxDate: parseNonNullablePickerDate(utils, themeProps.maxDate, defaultDates.maxDate),
   };

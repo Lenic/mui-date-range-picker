@@ -47,7 +47,6 @@ interface PopupProps<TInputDate, TDate>
  */
 export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
   const {
-    calendars,
     className,
     currentlySelectingRangeEnd,
     parsedValue,
@@ -103,7 +102,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         return;
       }
 
-      const displayingMonthRange = calendars - 1;
+      const displayingMonthRange = 1;
       const currentMonthNumber = utils.getMonth(calendarState.currentMonth);
       const requestedMonthNumber = utils.getMonth(day);
 
@@ -121,7 +120,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         changeMonth(newMonth);
       }
     },
-    [calendars, calendarState.currentMonth, changeMonth, currentlySelectingRangeEnd, end, isDateDisabled, start, utils]
+    [calendarState.currentMonth, changeMonth, currentlySelectingRangeEnd, end, isDateDisabled, start, utils]
   );
 
   useEffect(() => {
@@ -170,7 +169,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
 
   return (
     <div className={className}>
-      <DateRangePickerViewDesktop calendars={calendars} {...sharedCalendarProps} />
+      <DateRangePickerViewDesktop {...sharedCalendarProps} />
     </div>
   );
 }
