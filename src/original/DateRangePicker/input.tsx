@@ -13,7 +13,7 @@ import {
   useMaskedInput,
   onSpaceOrEnter,
 } from '@mui/x-date-pickers/internals';
-import { CurrentlySelectingRangeEndProps, DateRange } from '../internal/models/dateRange';
+import { FocusPositionProps, DateRange } from '../internal/models/dateRange';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 
 const DateRangePickerInputRoot = styled('div')(({ theme }) => ({
@@ -58,7 +58,7 @@ export interface InputProps<TInputDate, TDate>
       DateInputProps<TInputDate, TDate>,
       keyof ExportedDateRangePickerInputProps<TInputDate, TDate> | 'rawValue' | 'validationError'
     >,
-    CurrentlySelectingRangeEndProps {
+    FocusPositionProps {
   validationError: DateRangeValidationError;
   rawValue: DateRange<TInputDate>;
   mobile?: boolean;
@@ -74,7 +74,7 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
 ) {
   const props = useThemeProps({ props: inProps, name: 'DateRangePickerInput' });
   const {
-    currentlySelectingRangeEnd,
+    focusPosition,
     disableOpenPicker,
     onBlur,
     onChange,
@@ -84,7 +84,7 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
     rawValue: [start, end],
     readOnly,
     renderInput,
-    setCurrentlySelectingRangeEnd,
+    setFocusPosition,
     TextFieldProps,
     validationError: [startValidationError, endValidationError],
     className,
@@ -101,12 +101,12 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
       return;
     }
 
-    if (currentlySelectingRangeEnd === 'start') {
+    if (focusPosition === 'start') {
       startRef.current?.focus();
-    } else if (currentlySelectingRangeEnd === 'end') {
+    } else if (focusPosition === 'end') {
       endRef.current?.focus();
     }
-  }, [currentlySelectingRangeEnd, open]);
+  }, [focusPosition, open]);
 
   // TODO: rethink this approach. We do not need to wait for calendar to be updated to rerender input (looks like freezing)
   // TODO: so simply break 1 react's commit phase in 2 (first for input and second for calendars) by executing onChange in the next tick
@@ -125,8 +125,8 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
 
   const openRangeStartSelection = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
     event.stopPropagation();
-    if (setCurrentlySelectingRangeEnd) {
-      setCurrentlySelectingRangeEnd('start');
+    if (setFocusPosition) {
+      setFocusPosition('start');
     }
     if (!readOnly && !disableOpenPicker) {
       openPicker();
@@ -135,8 +135,8 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
 
   const openRangeEndSelection = (event: MouseEvent<HTMLElement> | KeyboardEvent<HTMLElement>) => {
     event.stopPropagation();
-    if (setCurrentlySelectingRangeEnd) {
-      setCurrentlySelectingRangeEnd('end');
+    if (setFocusPosition) {
+      setFocusPosition('end');
     }
     if (!readOnly && !disableOpenPicker) {
       openPicker();
@@ -144,14 +144,14 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
   };
 
   const focusOnRangeEnd = () => {
-    if (open && setCurrentlySelectingRangeEnd) {
-      setCurrentlySelectingRangeEnd('end');
+    if (open && setFocusPosition) {
+      setFocusPosition('end');
     }
   };
 
   const focusOnRangeStart = () => {
-    if (open && setCurrentlySelectingRangeEnd) {
-      setCurrentlySelectingRangeEnd('start');
+    if (open && setFocusPosition) {
+      setFocusPosition('start');
     }
   };
 
@@ -166,7 +166,7 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
     TextFieldProps: {
       ...TextFieldProps,
       ref: startRef,
-      focused: open ? currentlySelectingRangeEnd === 'start' : undefined,
+      focused: open ? focusPosition === 'start' : undefined,
       // registering `onClick` listener on the root element as well to correctly handle cases where user is clicking on `label`
       // which has `pointer-events: none` and due to DOM structure the `input` does not catch the click event
       ...(!readOnly && !other.disabled && { onClick: openRangeStartSelection }),
@@ -189,7 +189,7 @@ function DateRangePickerInputLogic<TInputDate, TDate>(
     TextFieldProps: {
       ...TextFieldProps,
       ref: endRef,
-      focused: open ? currentlySelectingRangeEnd === 'end' : undefined,
+      focused: open ? focusPosition === 'end' : undefined,
       // registering `onClick` listener on the root element as well to correctly handle cases where user is clicking on `label`
       // which has `pointer-events: none` and due to DOM structure the `input` does not catch the click event
       ...(!readOnly && !other.disabled && { onClick: openRangeEndSelection }),

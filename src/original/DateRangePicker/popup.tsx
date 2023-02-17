@@ -9,7 +9,7 @@ import {
   BaseDateValidationProps,
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { DateRange, CurrentlySelectingRangeEndProps, DayValidation } from '../internal/models/dateRange';
+import { DateRange, FocusPositionProps, DayValidation } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
 import type { InputProps } from './input';
@@ -34,7 +34,7 @@ export interface ExportedDateRangePickerViewProps<TDate>
 }
 
 interface PopupProps<TInputDate, TDate>
-  extends CurrentlySelectingRangeEndProps,
+  extends FocusPositionProps,
     ExportedDateRangePickerViewProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
     Required<BaseDateValidationProps<TDate>> {
@@ -48,7 +48,7 @@ interface PopupProps<TInputDate, TDate>
 export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
   const {
     className,
-    currentlySelectingRangeEnd,
+    focusPosition,
     parsedValue,
     DateInputProps,
     defaultCalendarMonth,
@@ -63,15 +63,15 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
     onMonthChange,
     open,
     reduceAnimations = defaultReduceAnimations,
-    setCurrentlySelectingRangeEnd,
+    setFocusPosition,
     shouldDisableDate,
     toggleMobileKeyboardView,
     ...other
   } = props;
 
   const wrappedShouldDisableDate = useCallback(
-    (dayToTest: TDate) => shouldDisableDate?.(dayToTest, currentlySelectingRangeEnd) || false,
-    [currentlySelectingRangeEnd, shouldDisableDate]
+    (dayToTest: TDate) => shouldDisableDate?.(dayToTest, focusPosition) || false,
+    [focusPosition, shouldDisableDate]
   );
 
   const [start, end] = parsedValue;
@@ -96,7 +96,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         return;
       }
 
-      const currentlySelectedDate = currentlySelectingRangeEnd === 'start' ? start : end;
+      const currentlySelectedDate = focusPosition === 'start' ? start : end;
       if (currentlySelectedDate === null) {
         // do not scroll if one of ages is not selected
         return;
@@ -112,7 +112,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         requestedMonthNumber > currentMonthNumber + displayingMonthRange
       ) {
         const newMonth =
-          currentlySelectingRangeEnd === 'start'
+          focusPosition === 'start'
             ? currentlySelectedDate
             : // If need to focus end, scroll to the state when "end" is displaying in the last calendar
               utils.addMonths(currentlySelectedDate, -displayingMonthRange);
@@ -120,7 +120,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         changeMonth(newMonth);
       }
     },
-    [calendarState.currentMonth, changeMonth, currentlySelectingRangeEnd, end, isDateDisabled, start, utils]
+    [calendarState.currentMonth, changeMonth, focusPosition, end, isDateDisabled, start, utils]
   );
 
   useEffect(() => {
@@ -128,8 +128,8 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
       return;
     }
 
-    scrollToDayIfNeeded(currentlySelectingRangeEnd === 'start' ? start : end);
-  }, [currentlySelectingRangeEnd, parsedValue, disableAutoMonthSwitching, scrollToDayIfNeeded, end, open, start]);
+    scrollToDayIfNeeded(focusPosition === 'start' ? start : end);
+  }, [focusPosition, parsedValue, disableAutoMonthSwitching, scrollToDayIfNeeded, end, open, start]);
 
   const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (newDate) => {
@@ -137,16 +137,16 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         newDate,
         utils,
         range: parsedValue,
-        currentlySelectingRangeEnd,
+        currentlySelectingRangeEnd: focusPosition,
       });
 
-      setCurrentlySelectingRangeEnd(nextSelection);
+      setFocusPosition(nextSelection);
 
-      const isFullRangeSelected = currentlySelectingRangeEnd === 'end' && isRangeValid(utils, newRange);
+      const isFullRangeSelected = focusPosition === 'end' && isRangeValid(utils, newRange);
 
       onDateChange(newRange as DateRange<TDate>, 'desktop', isFullRangeSelected ? 'finish' : 'partial');
     },
-    [currentlySelectingRangeEnd, parsedValue, onDateChange, setCurrentlySelectingRangeEnd, utils]
+    [focusPosition, parsedValue, onDateChange, setFocusPosition, utils]
   );
 
   const sharedCalendarProps = {
@@ -157,7 +157,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
     disableHighlightToday,
     onMonthSwitchingAnimationEnd,
     changeMonth,
-    currentlySelectingRangeEnd,
+    focusPosition,
     disableFuture,
     disablePast,
     minDate,

@@ -27,7 +27,7 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   /**
    * 当前输入的焦点在 `start` 还是在 `end`，默认值为 `start`
    */
-  const [currentlySelectingRangeEnd, setCurrentlySelectingRangeEnd] = useState<TFocusPosition>('start');
+  const [focusPosition, setFocusPosition] = useState<TFocusPosition>('start');
 
   const { pickerProps, inputProps, wrapperProps } = usePickerState(props, dateRangePickerValueManager);
 
@@ -35,8 +35,8 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   const DateInputProps = {
     ...inputProps,
     ...other,
-    currentlySelectingRangeEnd,
-    setCurrentlySelectingRangeEnd,
+    focusPosition,
+    setFocusPosition,
     validationError,
     ref,
   };
@@ -53,8 +53,8 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
       <Popup<TInputDate, TDate>
         open={wrapperProps.open}
         DateInputProps={DateInputProps}
-        currentlySelectingRangeEnd={currentlySelectingRangeEnd}
-        setCurrentlySelectingRangeEnd={setCurrentlySelectingRangeEnd}
+        focusPosition={focusPosition}
+        setFocusPosition={setFocusPosition}
         {...pickerProps}
         {...other}
       />

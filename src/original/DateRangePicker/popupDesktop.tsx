@@ -39,7 +39,7 @@ export interface DesktopDateRangeCalendarProps<TDate>
     DayValidationProps<TDate> {
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
-  currentlySelectingRangeEnd: TFocusPosition;
+  focusPosition: TFocusPosition;
 }
 
 const Container = styled('div')({ display: 'flex', flexDirection: 'row' });
@@ -74,7 +74,7 @@ export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate
   const props = useThemeProps({ props: inProps, name: 'DesktopView' });
   const {
     changeMonth,
-    currentlySelectingRangeEnd,
+    focusPosition,
     currentMonth,
     parsedValue,
     disableFuture,
@@ -104,7 +104,7 @@ export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate
    * 当前鼠标 hover 的日期，也可以说是预选的日期
    *
    * - 如果日期在选中的区域，则设置为 `null`
-   * - 是开始还是结束日期，需要和 `currentlySelectingRangeEnd` 属性关联
+   * - 是开始还是结束日期，需要和 `focusPosition` 属性关联
    */
   const [rangePreviewDay, setRangePreviewDay] = useState<TDate | null>(null);
 
@@ -123,7 +123,7 @@ export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate
     // 当前鼠标 hover 的日期：可 null 的日期
     newDate: rangePreviewDay,
     // 当前处于焦点状态的输入框：开始日期输入框、结束日期输入框
-    currentlySelectingRangeEnd,
+    currentlySelectingRangeEnd: focusPosition,
   });
 
   /**

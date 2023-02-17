@@ -9,9 +9,9 @@ export type NonEmptyDateRange<TDate> = [TDate, TDate];
  */
 export type TFocusPosition = 'start' | 'end';
 
-export interface CurrentlySelectingRangeEndProps {
-  currentlySelectingRangeEnd: TFocusPosition;
-  setCurrentlySelectingRangeEnd: (newSelectingEnd: TFocusPosition) => void;
+export interface FocusPositionProps {
+  focusPosition: TFocusPosition;
+  setFocusPosition: (position: TFocusPosition) => void;
 }
 
 /**
