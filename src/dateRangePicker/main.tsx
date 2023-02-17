@@ -2,7 +2,7 @@ import type { FC, Ref } from 'react';
 
 import type { DateRangePickerProps, DateRangePickerComponent, TFocusPosition } from './types';
 
-import { forwardRef, useState } from 'react';
+import { forwardRef, useMemo, useState } from 'react';
 import { useThemeProps } from '@mui/material/styles';
 import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/x-date-pickers/internals';
 
@@ -26,18 +26,13 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
    * 当前输入的焦点在 `start` 还是在 `end`，默认值为 `start`
    */
   const [focusPosition, setFocusPosition] = useState<TFocusPosition>('start');
-
   const { pickerProps, inputProps, wrapperProps } = usePickerState(props, dateRangePickerValueManager);
 
   const { value, onChange, PopperProps, PaperProps, TransitionComponent, ...other } = props;
-  const DateInputProps = {
-    ...inputProps,
-    ...other,
-    focusPosition,
-    setFocusPosition,
-    validationError,
-    ref,
-  };
+  const DateInputProps = useMemo(
+    () => ({ ...inputProps, ...other, focusPosition, setFocusPosition, validationError, ref }),
+    [inputProps, other, focusPosition, setFocusPosition, validationError, ref]
+  );
 
   return (
     <DesktopTooltipWrapper
