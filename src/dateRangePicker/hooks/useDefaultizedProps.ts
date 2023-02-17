@@ -1,6 +1,5 @@
 import type { BaseDateRangePickerProps } from '../types';
 import {
-  PickerStateValueManager,
   useDefaultDates,
   useLocaleText,
   useUtils,
@@ -9,8 +8,6 @@ import {
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
 import { useThemeProps } from '@mui/material/styles';
-
-import { parseRangeInputValue } from '../utils';
 
 export function useDefaultizedProps<TInputDate, TDate, Props extends BaseDateRangePickerProps<TInputDate, TDate>>(
   props: Props,
@@ -38,10 +35,3 @@ export function useDefaultizedProps<TInputDate, TDate, Props extends BaseDateRan
     maxDate: parseNonNullablePickerDate(utils, themeProps.maxDate, defaultDates.maxDate),
   };
 }
-
-export const dateRangePickerValueManager: PickerStateValueManager<[any, any], [any, any], any> = {
-  emptyValue: [null, null],
-  getTodayValue: (utils) => [utils.date()!, utils.date()!],
-  parseInput: parseRangeInputValue,
-  areValuesEqual: (utils, a, b) => utils.isEqual(a[0], b[0]) && utils.isEqual(a[1], b[1]),
-};

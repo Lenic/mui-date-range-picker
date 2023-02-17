@@ -6,11 +6,10 @@ import { forwardRef, useState } from 'react';
 import { useThemeProps } from '@mui/material/styles';
 import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/x-date-pickers/internals';
 
-import { useDateRangeValidation } from './hooks/useDateRangeValidation';
-
 import { Popup } from './panel/popup';
 import { DateRangePickerInput } from './panel/input';
-import { useDefaultizedProps, dateRangePickerValueManager } from './panel/shared';
+import { dateRangePickerValueManager } from './utils';
+import { useDateRangeValidation, useDefaultizedProps } from './hooks';
 
 function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   inProps: DateRangePickerProps<TInputDate, TDate>,

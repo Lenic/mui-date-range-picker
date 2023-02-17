@@ -9,8 +9,9 @@ import {
   DayPickerProps,
   BaseDateValidationProps,
 } from '@mui/x-date-pickers/internals';
-import { isRangeValid } from '../utils';
-import { calculateChangeRange } from './date-range-manager';
+
+import { calculateChangeRange, isRangeValid } from '../utils';
+
 import type { InputProps } from './input';
 import { DesktopPopup } from './popupDesktop';
 

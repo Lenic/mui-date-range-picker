@@ -1,6 +1,6 @@
-import type { DateRange, NonEmptyDateRange } from '../types';
+import type { MuiPickersAdapter, PickerStateValueManager } from '@mui/x-date-pickers/internals';
 
-import { MuiPickersAdapter } from '@mui/x-date-pickers/internals';
+import type { DateRange, NonEmptyDateRange } from '../types';
 
 export const parseRangeInputValue = <TDate>(utils: MuiPickersAdapter<TDate>, value: DateRange<any> = [null, null]) =>
   value.map((date) => {
@@ -10,6 +10,13 @@ export const parseRangeInputValue = <TDate>(utils: MuiPickersAdapter<TDate>, val
 
     return utils.startOfDay(utils.date(date) as TDate);
   }) as DateRange<TDate>;
+
+export const dateRangePickerValueManager: PickerStateValueManager<[any, any], [any, any], any> = {
+  emptyValue: [null, null],
+  getTodayValue: (utils) => [utils.date()!, utils.date()!],
+  parseInput: parseRangeInputValue,
+  areValuesEqual: (utils, a, b) => utils.isEqual(a[0], b[0]) && utils.isEqual(a[1], b[1]),
+};
 
 export const isRangeValid = <TDate>(
   utils: MuiPickersAdapter<TDate>,

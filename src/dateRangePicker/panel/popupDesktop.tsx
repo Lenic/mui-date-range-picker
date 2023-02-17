@@ -16,10 +16,9 @@ import {
   DayValidationProps,
 } from '@mui/x-date-pickers/internals';
 
-import { doNothing, isWithinRange, isStartOfRange, isEndOfRange } from '../utils';
+import { calculateHighlightRange, doNothing, isWithinRange, isStartOfRange, isEndOfRange } from '../utils';
 
 import { DateRangeDay } from './day';
-import { calculateHighlightRange } from './date-range-manager';
 
 export interface CalendarRender<TDate> {
   /**
