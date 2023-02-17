@@ -38,7 +38,6 @@ interface PopupProps<TInputDate, TDate>
     ExportedDateRangePickerViewProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
     Required<BaseDateValidationProps<TDate>> {
-  calendars: 1 | 2 | 3;
   open: boolean;
   DateInputProps: InputProps<TInputDate, TDate>;
 }

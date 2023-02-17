@@ -6,7 +6,7 @@ import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/
 
 import { useDateRangeValidation } from './internal/hooks/validation/useDateRangeValidation';
 
-import { Popup } from './DateRangePicker/DateRangePickerView';
+import { Popup } from './DateRangePicker/popup';
 import { DateRangePickerInput } from './DateRangePicker/input';
 import { useDateRangePickerDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
 

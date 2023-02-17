@@ -23,11 +23,6 @@ import { calculateRangePreview } from './date-range-manager';
 
 export interface CalendarProps<TDate> {
   /**
-   * The number of calendars that render on **desktop**.
-   * @default 2
-   */
-  calendars?: 1 | 2 | 3;
-  /**
    * Custom renderer for `<DateRangePicker />` days. @DateIOType
    * @example (date, dateRangePickerDayProps) => <DateRangeDay {...dateRangePickerDayProps} />
    * @template TDate
@@ -42,7 +37,6 @@ export interface DesktopDateRangeCalendarProps<TDate>
   extends CalendarProps<TDate>,
     Omit<DayPickerProps<TDate>, 'selectedDays' | 'renderDay' | 'onFocusedDayChange' | 'classes'>,
     DayValidationProps<TDate> {
-  calendars: 1 | 2 | 3;
   parsedValue: DateRange<TDate>;
   changeMonth: (date: TDate) => void;
   currentlySelectingRangeEnd: TFocusPosition;
@@ -71,13 +65,14 @@ const ArrowSwitcher = styled(PickersArrowSwitcher)(({ theme }) => ({
   justifyContent: 'space-between',
 }));
 
+const calendars = new Array(2).fill(0);
+
 /**
  * @ignore - internal component.
  */
 export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalendarProps<TDate>) {
   const props = useThemeProps({ props: inProps, name: 'DesktopView' });
   const {
-    calendars,
     changeMonth,
     currentlySelectingRangeEnd,
     currentMonth,
@@ -174,7 +169,7 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
   const isPreviousMonthDisabled = usePreviousMonthDisabled(currentMonth, { disablePast, minDate });
   return (
     <Container className={clsx('desktop-container', className)}>
-      {new Array(calendars).fill(0).map((_, index) => {
+      {calendars.map((_, index) => {
         const monthOnIteration = utils.setMonth(currentMonth, utils.getMonth(currentMonth) + index);
 
         return (
@@ -183,7 +178,7 @@ export function DateRangePickerViewDesktop<TDate>(inProps: DesktopDateRangeCalen
               onLeftClick={selectPreviousMonth}
               onRightClick={selectNextMonth}
               isLeftHidden={index !== 0}
-              isRightHidden={index !== calendars - 1}
+              isRightHidden={index !== 1}
               isLeftDisabled={isPreviousMonthDisabled}
               isRightDisabled={isNextMonthDisabled}
               leftArrowButtonText={localeText.previousMonth}
