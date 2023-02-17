@@ -8,9 +8,9 @@ import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/
 
 import { useDateRangeValidation } from './hooks/useDateRangeValidation';
 
-import { Popup } from './DateRangePicker/popup';
-import { DateRangePickerInput } from './DateRangePicker/input';
-import { useDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
+import { Popup } from './panel/popup';
+import { DateRangePickerInput } from './panel/input';
+import { useDefaultizedProps, dateRangePickerValueManager } from './panel/shared';
 
 function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
   inProps: DateRangePickerProps<TInputDate, TDate>,
