@@ -137,7 +137,7 @@ export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
         newDate,
         utils,
         range: parsedValue,
-        currentlySelectingRangeEnd: focusPosition,
+        focusPosition,
       });
 
       setFocusPosition(nextSelection);

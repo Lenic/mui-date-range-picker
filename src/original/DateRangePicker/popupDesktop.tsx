@@ -123,7 +123,7 @@ export function DesktopPopup<TDate>(inProps: DesktopDateRangeCalendarProps<TDate
     // 当前鼠标 hover 的日期：可 null 的日期
     newDate: rangePreviewDay,
     // 当前处于焦点状态的输入框：开始日期输入框、结束日期输入框
-    currentlySelectingRangeEnd: focusPosition,
+    focusPosition,
   });
 
   /**

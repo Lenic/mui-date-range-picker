@@ -5,21 +5,21 @@ interface CalculateRangeChangeOptions<TDate> {
   utils: MuiPickersAdapter<TDate>;
   range: DateRange<TDate>;
   newDate: TDate;
-  currentlySelectingRangeEnd: TFocusPosition;
+  focusPosition: TFocusPosition;
 }
 
 export function calculateRangeChange<TDate>({
   utils,
   range,
   newDate: selectedDate,
-  currentlySelectingRangeEnd,
+  focusPosition,
 }: CalculateRangeChangeOptions<TDate>): {
   nextSelection: TFocusPosition;
   newRange: DateRange<TDate>;
 } {
   const [start, end] = range;
 
-  if (currentlySelectingRangeEnd === 'start') {
+  if (focusPosition === 'start') {
     return Boolean(end) && utils.isAfter(selectedDate, end!)
       ? { nextSelection: 'end', newRange: [selectedDate, null] }
       : { nextSelection: 'end', newRange: [selectedDate, end] };
@@ -43,5 +43,5 @@ export function calculateRangePreview<TDate>(options: CalculateRangeChangeOption
   }
 
   const [previewStart, previewEnd] = newRange;
-  return options.currentlySelectingRangeEnd === 'end' ? [end, previewEnd] : [previewStart, start];
+  return options.focusPosition === 'end' ? [end, previewEnd] : [previewStart, start];
 }
