@@ -7,7 +7,7 @@ import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/
 import { useDateRangeValidation } from './internal/hooks/validation/useDateRangeValidation';
 
 import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
-import { DateRangePickerInput } from './DateRangePicker/DateRangePickerInput';
+import { DateRangePickerInput } from './DateRangePicker/input';
 import { useDateRangePickerDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
 
 import type { TFocusPosition } from './internal/models';

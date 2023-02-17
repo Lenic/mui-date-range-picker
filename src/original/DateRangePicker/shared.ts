@@ -16,7 +16,7 @@ import { ExportedDateRangePickerViewProps } from './DateRangePickerView';
 import { DateRangeValidationError } from '../internal/hooks/validation/useDateRangeValidation';
 import { DateRange } from '../internal/models';
 import { parseRangeInputValue } from '../internal/utils/date-utils';
-import { ExportedDateRangePickerInputProps } from './DateRangePickerInput';
+import { ExportedDateRangePickerInputProps } from './input';
 
 export interface BaseDateRangePickerProps<TInputDate, TDate>
   extends Omit<BasePickerProps<DateRange<TInputDate>, DateRange<TDate>>, 'orientation'>,

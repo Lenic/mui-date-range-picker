@@ -12,7 +12,7 @@ import {
 import { DateRange, CurrentlySelectingRangeEndProps, DayRangeValidationProps } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
-import type { InputProps } from './DateRangePickerInput';
+import type { InputProps } from './input';
 import { DateRangePickerViewDesktop, ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
 
 export interface ExportedDateRangePickerViewProps<TDate>
