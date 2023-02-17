@@ -12,7 +12,7 @@ import {
 import { DateRange, CurrentlySelectingRangeEndProps, DayRangeValidationProps } from '../internal/models/dateRange';
 import { isRangeValid } from '../internal/utils/date-utils';
 import { calculateRangeChange } from './date-range-manager';
-import type { DateRangePickerInputProps } from './DateRangePickerInput';
+import type { InputProps } from './DateRangePickerInput';
 import { DateRangePickerViewDesktop, ExportedDesktopDateRangeCalendarProps } from './DateRangePickerViewDesktop';
 
 export interface ExportedDateRangePickerViewProps<TDate>
@@ -42,7 +42,7 @@ interface DateRangePickerViewProps<TInputDate, TDate>
   open: boolean;
   startText: React.ReactNode;
   endText: React.ReactNode;
-  DateInputProps: DateRangePickerInputProps<TInputDate, TDate>;
+  DateInputProps: InputProps<TInputDate, TDate>;
 }
 
 type DateRangePickerViewComponent = <TInputDate, TDate = TInputDate>(
