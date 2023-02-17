@@ -6,7 +6,7 @@ import { DesktopTooltipWrapper, usePickerState, DateInputPropsLike } from '@mui/
 
 import { useDateRangeValidation } from './internal/hooks/validation/useDateRangeValidation';
 
-import { DateRangePickerView } from './DateRangePicker/DateRangePickerView';
+import { Popup } from './DateRangePicker/DateRangePickerView';
 import { DateRangePickerInput } from './DateRangePicker/input';
 import { useDateRangePickerDefaultizedProps, dateRangePickerValueManager } from './DateRangePicker/shared';
 
@@ -50,7 +50,7 @@ function DateRangePickerLogic<TInputDate, TDate = TInputDate>(
       PaperProps={PaperProps}
       TransitionComponent={TransitionComponent}
     >
-      <DateRangePickerView<TInputDate, TDate>
+      <Popup<TInputDate, TDate>
         open={wrapperProps.open}
         DateInputProps={DateInputProps}
         currentlySelectingRangeEnd={currentlySelectingRangeEnd}

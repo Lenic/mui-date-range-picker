@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   useUtils,
   defaultReduceAnimations,
@@ -33,7 +33,7 @@ export interface ExportedDateRangePickerViewProps<TDate>
   className?: string;
 }
 
-interface DateRangePickerViewProps<TInputDate, TDate>
+interface PopupProps<TInputDate, TDate>
   extends CurrentlySelectingRangeEndProps,
     ExportedDateRangePickerViewProps<TDate>,
     PickerStatePickerProps<DateRange<TDate>>,
@@ -43,14 +43,10 @@ interface DateRangePickerViewProps<TInputDate, TDate>
   DateInputProps: InputProps<TInputDate, TDate>;
 }
 
-type DateRangePickerViewComponent = <TInputDate, TDate = TInputDate>(
-  props: DateRangePickerViewProps<TInputDate, TDate>
-) => JSX.Element;
-
 /**
  * @ignore - internal component.
  */
-function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewProps<TInputDate, TDate>) {
+export function Popup<TInputDate, TDate>(props: PopupProps<TInputDate, TDate>) {
   const {
     calendars,
     className,
@@ -75,10 +71,10 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     ...other
   } = props;
 
-  const utils = useUtils<TDate>();
-
-  const wrappedShouldDisableDate =
-    shouldDisableDate && ((dayToTest: TDate) => shouldDisableDate?.(dayToTest, currentlySelectingRangeEnd));
+  const wrappedShouldDisableDate = useCallback(
+    (dayToTest: TDate) => shouldDisableDate?.(dayToTest, currentlySelectingRangeEnd) || false,
+    [currentlySelectingRangeEnd, shouldDisableDate]
+  );
 
   const [start, end] = parsedValue;
   const { changeMonth, calendarState, isDateDisabled, onMonthSwitchingAnimationEnd, changeFocusedDay } =
@@ -95,45 +91,49 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
       shouldDisableDate: wrappedShouldDisableDate,
     });
 
-  const scrollToDayIfNeeded = (day: TDate | null) => {
-    if (!day || !utils.isValid(day) || isDateDisabled(day)) {
-      return;
-    }
+  const utils = useUtils<TDate>();
+  const scrollToDayIfNeeded = useCallback(
+    (day: TDate | null) => {
+      if (!day || !utils.isValid(day) || isDateDisabled(day)) {
+        return;
+      }
 
-    const currentlySelectedDate = currentlySelectingRangeEnd === 'start' ? start : end;
-    if (currentlySelectedDate === null) {
-      // do not scroll if one of ages is not selected
-      return;
-    }
+      const currentlySelectedDate = currentlySelectingRangeEnd === 'start' ? start : end;
+      if (currentlySelectedDate === null) {
+        // do not scroll if one of ages is not selected
+        return;
+      }
 
-    const displayingMonthRange = calendars - 1;
-    const currentMonthNumber = utils.getMonth(calendarState.currentMonth);
-    const requestedMonthNumber = utils.getMonth(day);
+      const displayingMonthRange = calendars - 1;
+      const currentMonthNumber = utils.getMonth(calendarState.currentMonth);
+      const requestedMonthNumber = utils.getMonth(day);
 
-    if (
-      !utils.isSameYear(calendarState.currentMonth, day) ||
-      requestedMonthNumber < currentMonthNumber ||
-      requestedMonthNumber > currentMonthNumber + displayingMonthRange
-    ) {
-      const newMonth =
-        currentlySelectingRangeEnd === 'start'
-          ? currentlySelectedDate
-          : // If need to focus end, scroll to the state when "end" is displaying in the last calendar
-            utils.addMonths(currentlySelectedDate, -displayingMonthRange);
+      if (
+        !utils.isSameYear(calendarState.currentMonth, day) ||
+        requestedMonthNumber < currentMonthNumber ||
+        requestedMonthNumber > currentMonthNumber + displayingMonthRange
+      ) {
+        const newMonth =
+          currentlySelectingRangeEnd === 'start'
+            ? currentlySelectedDate
+            : // If need to focus end, scroll to the state when "end" is displaying in the last calendar
+              utils.addMonths(currentlySelectedDate, -displayingMonthRange);
 
-      changeMonth(newMonth);
-    }
-  };
+        changeMonth(newMonth);
+      }
+    },
+    [calendars, calendarState.currentMonth, changeMonth, currentlySelectingRangeEnd, end, isDateDisabled, start, utils]
+  );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (disableAutoMonthSwitching || !open) {
       return;
     }
 
     scrollToDayIfNeeded(currentlySelectingRangeEnd === 'start' ? start : end);
-  }, [currentlySelectingRangeEnd, parsedValue]); // eslint-disable-line
+  }, [currentlySelectingRangeEnd, parsedValue, disableAutoMonthSwitching, scrollToDayIfNeeded, end, open, start]);
 
-  const handleSelectedDayChange = React.useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
+  const handleSelectedDayChange = useCallback<DayPickerProps<TDate>['onSelectedDaysChange']>(
     (newDate) => {
       const { nextSelection, newRange } = calculateRangeChange({
         newDate,
@@ -175,5 +175,3 @@ function DateRangePickerViewRaw<TInputDate, TDate>(props: DateRangePickerViewPro
     </div>
   );
 }
-
-export const DateRangePickerView = DateRangePickerViewRaw as DateRangePickerViewComponent;
