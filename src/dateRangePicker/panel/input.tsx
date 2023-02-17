@@ -1,6 +1,6 @@
 import type { KeyboardEvent, MouseEvent, Ref, RefAttributes } from 'react';
 
-import type { InputRender, FocusPositionProps, DateRange, DateRangeValidationError } from '../types';
+import type { InputRender, FocusPositionProps, DateRange, ValidationErrors } from '../types';
 
 import { forwardRef, useCallback, useEffect, useRef } from 'react';
 import clsx from 'clsx';
@@ -27,7 +27,7 @@ export interface InputProps<TInputDate, TDate>
   extends InputRender<TInputDate, TDate>,
     Omit<DateInputProps<TInputDate, TDate>, keyof InputRender<TInputDate, TDate> | 'rawValue' | 'validationError'>,
     FocusPositionProps {
-  validationError: DateRangeValidationError;
+  validationError: ValidationErrors;
   rawValue: DateRange<TInputDate>;
   mobile?: boolean;
 }

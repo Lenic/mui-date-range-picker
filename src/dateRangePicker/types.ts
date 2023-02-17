@@ -127,15 +127,15 @@ export interface CalendarProps<TDate> extends CalendarRender<TDate>, DayValidati
   className?: string;
 }
 
-export type DateRangeValidationErrorValue = DateValidationError | 'invalidRange' | null;
+export type ValidationError = DateValidationError | 'invalidRange' | null;
 
-export type DateRangeValidationError = [DateRangeValidationErrorValue, DateRangeValidationErrorValue];
+export type ValidationErrors = [ValidationError, ValidationError];
 
 export interface BaseDateRangePickerProps<TInputDate, TDate>
   extends Omit<BasePickerProps<DateRange<TInputDate>, DateRange<TDate>>, 'orientation'>,
     CalendarProps<TDate>,
     BaseDateValidationProps<TDate>,
-    ValidationProps<DateRangeValidationError, DateRange<TInputDate>>,
+    ValidationProps<ValidationErrors, DateRange<TInputDate>>,
     InputRender<TInputDate, TDate> {
   /**
    * Custom mask. Can be used to override generate from format. (e.g. `__/__/____ __:__` or `__/__/____ __:__ _M`).

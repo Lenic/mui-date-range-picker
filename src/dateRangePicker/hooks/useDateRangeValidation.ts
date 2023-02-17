@@ -1,36 +1,30 @@
-import type { DateRange, DayValidation, DateRangeValidationErrorValue, DateRangeValidationError } from '../types';
+import type { BaseDateValidationProps, ValidationProps, Validator } from '@mui/x-date-pickers/internals';
 
-import {
-  useValidation,
-  ValidationProps,
-  Validator,
-  validateDate,
-  BaseDateValidationProps,
-} from '@mui/x-date-pickers/internals';
+import type { DateRange, DayValidation, TFocusPosition, ValidationError, ValidationErrors } from '../types';
+
+import { useValidation, validateDate } from '@mui/x-date-pickers/internals';
+
 import { isRangeValid, parseRangeInputValue } from '../utils';
 
-export interface DateRangeValidationProps<TInputDate, TDate>
-  extends DayValidation<TDate>,
-    Required<BaseDateValidationProps<TDate>>,
-    ValidationProps<DateRangeValidationError, DateRange<TInputDate>> {}
+export type TValidationProps<TInputDate, TDate> = DayValidation<TDate> &
+  Required<BaseDateValidationProps<TDate>> &
+  ValidationProps<ValidationErrors, DateRange<TInputDate>>;
 
-export const validateDateRange: Validator<any, DateRangeValidationProps<any, any>> = ({ props, value, adapter }) => {
+export const validateDateRange: Validator<any, TValidationProps<any, any>> = ({ props, value, adapter }) => {
   const [start, end] = value;
 
-  // for partial input
-  if (start === null || end === null) {
-    return [null, null];
-  }
+  let ans: [ValidationError, ValidationError] = [null, null];
+  if (start === null || end === null) return ans;
 
   const { shouldDisableDate, ...otherProps } = props;
-
-  const dateValidations: [DateRangeValidationErrorValue, DateRangeValidationErrorValue] = [
+  const shouldDisable = (position: TFocusPosition) => (day: any) => !!shouldDisableDate?.(day, position);
+  ans = [
     validateDate({
       adapter,
       value: start,
       props: {
         ...otherProps,
-        shouldDisableDate: (day) => !!shouldDisableDate?.(day, 'start'),
+        shouldDisableDate: shouldDisable('start'),
       },
     }),
     validateDate({
@@ -38,27 +32,23 @@ export const validateDateRange: Validator<any, DateRangeValidationProps<any, any
       value: end,
       props: {
         ...otherProps,
-        shouldDisableDate: (day) => !!shouldDisableDate?.(day, 'end'),
+        shouldDisableDate: shouldDisable('end'),
       },
     }),
   ];
 
-  if (dateValidations[0] || dateValidations[1]) {
-    return dateValidations;
-  }
+  if (ans[0] || ans[1]) return ans;
 
   if (!isRangeValid(adapter.utils, parseRangeInputValue(adapter.utils, value))) {
     return ['invalidRange', 'invalidRange'];
   }
-
   return [null, null];
 };
 
-export const isSameDateRangeError = (a: DateRangeValidationError, b: DateRangeValidationError | null) =>
-  b !== null && a[1] === b[1] && a[0] === b[0];
+export function isSameError(a: ValidationErrors, b: ValidationErrors | null) {
+  return b !== null && a[1] === b[1] && a[0] === b[0];
+}
 
-export const useDateRangeValidation = <TInputDate, TDate>(
-  props: DateRangeValidationProps<TInputDate, TDate>
-): DateRangeValidationError => {
-  return useValidation(props, validateDateRange, isSameDateRangeError);
-};
+export function useDateRangeValidation<TInputDate, TDate>(props: TValidationProps<TInputDate, TDate>) {
+  return useValidation(props, validateDateRange, isSameError) as ValidationErrors;
+}
