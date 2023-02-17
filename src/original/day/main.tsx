@@ -19,11 +19,11 @@ const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
     day,
     outsideCurrentMonth,
     isEndOfHighlighting,
-    isEndOfPreviewing,
+    isEndOfPreselected,
     isHighlighting,
-    isPreviewing,
+    isPreselected,
     isStartOfHighlighting,
-    isStartOfPreviewing,
+    isStartOfPreselected,
     selected = false,
     ...other
   } = props;
@@ -46,9 +46,9 @@ const DateRangeDayLogic = forwardRef(function DateRangePickerDay<TDate>(
       <DayRenderContainer
         className={clsx([
           'day-container',
-          isPreviewing && !outsideCurrentMonth && 'preselected',
-          (isStartOfPreviewing || isStartOfMonth) && 'preselected-start',
-          (isEndOfPreviewing || isEndOfMonth) && 'preselected-end',
+          isPreselected && !outsideCurrentMonth && 'preselected',
+          (isStartOfPreselected || isStartOfMonth) && 'preselected-start',
+          (isEndOfPreselected || isEndOfMonth) && 'preselected-end',
         ])}
       >
         <DayRenderCore<TDate>
@@ -78,9 +78,9 @@ const propsAreEqual = (
     prevProps.isHighlighting === nextProps.isHighlighting &&
     prevProps.isEndOfHighlighting === nextProps.isEndOfHighlighting &&
     prevProps.isStartOfHighlighting === nextProps.isStartOfHighlighting &&
-    prevProps.isPreviewing === nextProps.isPreviewing &&
-    prevProps.isEndOfPreviewing === nextProps.isEndOfPreviewing &&
-    prevProps.isStartOfPreviewing === nextProps.isStartOfPreviewing &&
+    prevProps.isPreselected === nextProps.isPreselected &&
+    prevProps.isEndOfPreselected === nextProps.isEndOfPreselected &&
+    prevProps.isStartOfPreselected === nextProps.isStartOfPreselected &&
     areDayPropsEqual(prevProps, nextProps)
   );
 };

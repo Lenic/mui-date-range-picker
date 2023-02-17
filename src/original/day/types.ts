@@ -19,15 +19,15 @@ export interface IDateRangeDayProps<TDate>
   /**
    * Set to `true` if the `day` is in a preview date range.
    */
-  isPreviewing: boolean;
+  isPreselected: boolean;
   /**
    * Set to `true` if the `day` is the start of a highlighted date range.
    */
-  isEndOfPreviewing: boolean;
+  isEndOfPreselected: boolean;
   /**
    * Set to `true` if the `day` is the end of a highlighted date range.
    */
-  isStartOfPreviewing: boolean;
+  isStartOfPreselected: boolean;
   /**
    * The system prop that allows defining system overrides as well as additional CSS styles.
    */

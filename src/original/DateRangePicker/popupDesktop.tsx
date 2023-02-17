@@ -200,9 +200,9 @@ export function DesktopPopup<TDate>(inProps: DesktopPopupProps<TDate>) {
               TransitionProps={CalendarTransitionProps}
               renderDay={(day, __, DayProps) =>
                 renderDay(day, {
-                  isPreviewing: isWithinRange(utils, day, previewingRange),
-                  isStartOfPreviewing: isStartOfRange(utils, day, previewingRange),
-                  isEndOfPreviewing: isEndOfRange(utils, day, previewingRange),
+                  isPreselected: isWithinRange(utils, day, previewingRange),
+                  isStartOfPreselected: isStartOfRange(utils, day, previewingRange),
+                  isEndOfPreselected: isEndOfRange(utils, day, previewingRange),
                   isHighlighting: isWithinRange(utils, day, parsedValue),
                   isStartOfHighlighting: isStartOfRange(utils, day, parsedValue),
                   isEndOfHighlighting: isEndOfRange(utils, day, parsedValue),
