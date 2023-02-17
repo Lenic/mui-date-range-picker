@@ -1,3 +1,6 @@
+import type { Dayjs } from 'dayjs';
+import type { DateRange } from './dateRangePicker';
+
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
@@ -5,10 +8,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
-import type { Dayjs } from 'dayjs';
-import type { DateRange } from './original';
-
-import { DateRangePicker } from './original';
+import { DateRangePicker } from './dateRangePicker';
 
 const DateRangePickerContainer = styled('div', { name: 'DateRangePickerContainer' })`
   display: flex;
